@@ -1,0 +1,250 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  name        String
+  email       String   @unique
+  profile_pic String?  // Nullable
+  password    String
+  provider    String @default("local")
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  subscriptions  Subscription[]
+  preferences UserPreference[]
+  resetTokens PasswordResetToken[]
+
+  @@map("user")
+}
+
+
+model ContactUs {
+  id              Int      @id @default(autoincrement())
+  name            String?
+  email           String
+  description     String
+  created_at      DateTime  @default(now())
+
+  @@map("contact_us")
+}
+
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  profile_pic String?  // Nullable
+  password  String
+  type      String   // "superadmin" | "manager" | "employee"
+  created_at DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("admin")
+}
+
+model Pricing {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String?
+  price        Float
+  currency     String   @default("USD")
+  billingCycle String   // 'monthly', 'annual', etc.
+  features     String[] // or use a separate Feature model
+  badge        String?  // e.g. 'Most Popular'
+  ctaLabel     String?  // e.g. 'Upgrade to Pro'
+  theme        String?  // e.g. 'blue', 'gray', 'green'
+  isActive     Boolean  @default(true)
+  created_at   DateTime @default(now())
+
+  // Lemon Squeezy integration fields
+  lsProductId   String?   // LS Product ID
+  lsVariantId   String?   // LS Variant ID
+  lsCheckoutUrl String?  // optional, fallback checkout link
+
+  @@map("pricing")
+}
+
+
+model Subscription {
+  id                     String   @id @default(cuid())
+  userId                 String
+  user                   User     @relation(fields: [userId], references: [id])
+
+  provider               String
+  providerCustomerId     String?   // optional, not always present in LS
+  providerSubscriptionId String?   // optional, since LS products may not create subs
+
+  providerCheckoutId     String?  // LS checkout UUID
+
+  planTitle              String
+  planPrice              Float
+  planCurrency           String
+  planBillingCycle       String?   // optional, since you’re simulating cycles
+
+  status                 SubscriptionStatus @default(ACTIVE)
+  currentPeriodStart     DateTime?           // optional
+  currentPeriodEnd       DateTime?           // optional
+  cancelAtPeriodEnd      Boolean?  @default(false)
+
+  payments               Payment[]
+
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  @@map("subscription")
+}
+
+
+enum SubscriptionStatus {
+  ACTIVE
+  TRIALING
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+}
+
+model Payment {
+  id                     String   @id @default(cuid())
+  subscriptionId         String
+  subscription           Subscription @relation(fields: [subscriptionId], references: [id])
+
+  provider               String
+  providerPaymentId      String
+
+  amount                 Float
+  currency               String
+  status                 PaymentStatus
+  receiptUrl             String?
+  payload                String?
+
+  createdAt              DateTime @default(now())
+
+  @@map("payment")
+}
+
+enum PaymentStatus {
+  SUCCEEDED
+  FAILED
+  PENDING
+}
+
+
+model Setting {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique   // e.g. "LEMONSQUEEZY_API_KEY", "DEFAULT_CURRENCY"
+  value       String?            // can hold API keys, JSON blobs, or plain values
+  description String?            // optional context for admins
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("setting")
+}
+
+model UserPreference {
+  id        String   @id @default(uuid())
+  userId    String
+  key       String   // e.g. "viewMode", "theme", "language"
+  value     String   // stored as string, can be JSON if needed
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, key]) // one preference per key per user
+  @@map("user_preference")
+}
+
+
+model PasswordResetToken {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash  String   // store hash, never raw token
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+
+  @@map("password_reset_token")
+}
+
+model Situation {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  created_at  DateTime @default(now())
+
+  actors Actor[]
+  lines  Line[]
+
+  @@map("situations")
+}
+
+model Actor {
+  id           String   @id @default(uuid())
+  situation_id String
+  name         String
+  order        Int?
+  created_at   DateTime @default(now())
+
+  situation Situation @relation(fields: [situation_id], references: [id], onDelete: Cascade)
+  lines      Line[]
+
+  @@index([situation_id])
+  @@map("actors")
+}
+
+model Line {
+  id           String   @id @default(uuid())
+  situation_id String
+  actor_id     String
+  text         String
+  order        Int
+  created_at   DateTime @default(now())
+
+  situation Situation @relation(fields: [situation_id], references: [id], onDelete: Cascade)
+  actor     Actor     @relation(fields: [actor_id], references: [id], onDelete: Cascade)
+
+  voices     LineVoice[]
+  recordings Recording[]
+
+  @@index([situation_id])
+  @@index([actor_id])
+  @@unique([situation_id, order])
+  @@map("lines")
+}
+
+model LineVoice {
+  id        String @id @default(uuid())
+  line_id  String
+  accent   String   // "en-IN", "en-US", "en-GB"
+  audio_src String
+
+  line Line @relation(fields: [line_id], references: [id], onDelete: Cascade)
+
+  @@index([line_id])
+  @@unique([line_id, accent])
+  @@map("line_voices")
+}
+
+model Recording {
+  id        String   @id @default(uuid())
+  user_id  String
+  line_id  String
+  audio_src String
+  created_at DateTime @default(now())
+
+  line Line @relation(fields: [line_id], references: [id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@index([line_id])
+  @@map("recordings")
+}
