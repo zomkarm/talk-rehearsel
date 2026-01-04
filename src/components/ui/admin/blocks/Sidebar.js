@@ -53,6 +53,16 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
               </li>
               <li>
                 <a
+                  href="/admin/talkrehearsel"
+                  className="flex items-center gap-2 px-3 py-2 rounded-md 
+                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
+                             hover:font-semibold transition"
+                >
+                  <Users size={18} strokeWidth={2} /> Talk Rehearsel
+                </a>
+              </li>
+              <li>
+                <a
                   href="/admin/pricing"
                   className="flex items-center gap-2 px-3 py-2 rounded-md 
                              text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 

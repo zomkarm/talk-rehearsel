@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma/client';
 import {SuperAdminSeeder} from "@/lib/prisma/admin/seed_superadmin";
 import {PricingSeeder} from "@/lib/prisma/admin/seed_pricings";
 import {SettingSeeder} from "@/lib/prisma/admin/seed_settings";
+import {TalkRehearselSeeder} from "@/lib/prisma/admin/seed_talkrehearsel";
 
 export async function POST(req) {
   try {
@@ -14,6 +15,7 @@ export async function POST(req) {
 
       await SettingSeeder();
 
+      await TalkRehearselSeeder();
     
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (err) {
