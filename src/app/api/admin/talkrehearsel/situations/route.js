@@ -67,3 +67,31 @@ export async function DELETE(req) {
     )
   }
 }
+
+export async function POST(req) {
+  try {
+    const body = await req.json()
+
+    if (!body.title) {
+      return NextResponse.json(
+        { error: 'Title is required' },
+        { status: 400 }
+      )
+    }
+
+    const situation = await prisma.situation.create({
+      data: {
+        title: body.title,
+        description: body.description || null
+      }
+    })
+
+    return NextResponse.json({ situation })
+  } catch (err) {
+    console.error(err)
+    return NextResponse.json(
+      { error: 'Failed to create situation' },
+      { status: 500 }
+    )
+  }
+}

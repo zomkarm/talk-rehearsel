@@ -1,4 +1,4 @@
-import { Home, Trash2, Users, Laptop, School, BrickWall, CircleDollarSign, MessageCircleCode, Rss, CreditCard, Store } from 'lucide-react'
+import { Home, Trash2, Users, Laptop, School, BrickWall, CircleDollarSign, MessageCircleCode, Rss, CreditCard, Store, AudioLines } from 'lucide-react'
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
   return (
@@ -58,7 +58,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
                              text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
                              hover:font-semibold transition"
                 >
-                  <Users size={18} strokeWidth={2} /> Talk Rehearsel
+                  <AudioLines size={18} strokeWidth={2} /> Talk Rehearsel
                 </a>
               </li>
               <li>

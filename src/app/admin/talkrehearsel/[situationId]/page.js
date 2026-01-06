@@ -153,6 +153,11 @@ export default function ManageSituation() {
       {/* ACTORS */}
       <section className="mb-10">
         <h2 className="text-lg font-semibold mb-3">Actors</h2>
+        {situation.actors.length === 0 && (
+          <p className="text-sm text-gray-500">
+            No actors yet. Add one to begin.
+          </p>
+        )}
 
         <div className="space-y-2 mb-4">
           {situation.actors.map((a) => (
@@ -190,121 +195,139 @@ export default function ManageSituation() {
       {/* LINES */}
       <section>
         <h2 className="text-lg font-semibold mb-3">Lines</h2>
+        {situation.lines.length === 0 && (
+          <p className="text-sm text-gray-500">
+            No lines added yet.
+          </p>
+        )}
 
         <div className="space-y-2 mb-4">
-          { situation.lines.map((l) => (
-            <div
-              key={l.id}
-              className="border p-4 rounded-lg space-y-3"
-            >
-              {/* Line header */}
-              <div className="flex justify-between items-start">
-                <div>
-                  <p className="text-sm font-semibold">
-                    #{l.order} — {l.actor.name}
-                  </p>
-                  <p className="text-gray-700">{l.text}</p>
+          {situation.lines.map((l) => {
+            const usedAccents = l.voices.map((v) => v.accent)
+
+            return (
+              <div
+                key={l.id}
+                className="border p-4 rounded-lg space-y-3"
+              >
+                {/* Line header */}
+                <div className="flex justify-between items-start">
+                  <div>
+                    <p className="text-sm font-semibold">
+                      #{l.order} — {l.actor.name}
+                    </p>
+                    <p className="text-gray-700">{l.text}</p>
+                  </div>
+
+                  <button
+                    onClick={() => deleteLine(l.id)}
+                    className="text-red-600 hover:bg-red-50 p-2 rounded"
+                  >
+                    <Trash2 size={16} />
+                  </button>
                 </div>
 
-                <button
-                  onClick={() => deleteLine(l.id)}
-                  className="text-red-600 hover:bg-red-50 p-2 rounded"
-                >
-                  <Trash2 size={16} />
-                </button>
-              </div>
+                {/* Voices */}
+                <div className="ml-4 space-y-2">
+                  {l.voices.map((v) => (
+                    <div
+                      key={v.id}
+                      className="flex items-center justify-between bg-gray-50 p-2 rounded text-sm"
+                    >
+                      <span className="font-medium">{v.accent}</span>
 
-              {/* Voices */}
-              <div className="ml-4 space-y-2">
-                {l.voices.map((v) => (
-                  <div
-                    key={v.id}
-                    className="flex items-center justify-between bg-gray-50 p-2 rounded text-sm"
-                  >
-                    <span className="font-medium">{v.accent}</span>
-
-                    <div className="flex items-center gap-2">
-                      <audio controls src={v.audio_src} className="h-8" />
-
-                      <button
-                        onClick={() => deleteVoice(v.id)}
-                        className="text-red-600 hover:bg-red-100 p-1 rounded"
-                      >
-                        <Trash2 size={14} />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <audio controls src={v.audio_src} className="h-8" />
+                        <button
+                          onClick={() => deleteVoice(v.id)}
+                          className="text-red-600 hover:bg-red-100 p-1 rounded"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                {/* Add Voice */}
+                {activeLineId === l.id ? (
+                  <form
+                    onSubmit={async (e) => {
+                      e.preventDefault()
+                      const formData = new FormData(e.target)
+                      formData.append('line_id', l.id)
+
+                      await fetch('/api/admin/talkrehearsel/voices', {
+                        method: 'POST',
+                        body: formData
+                      })
+
+                      setActiveLineId(null)
+                      fetchSituation()
+                      toast.success('Voice added')
+                    }}
+                    className="ml-4 flex gap-2 items-center"
+                  >
+                    <select
+                      name="accent"
+                      required
+                      className="border rounded px-2 py-1"
+                    >
+                      <option value="">Accent</option>
+                      {!usedAccents.includes('en-IN') && (
+                        <option value="en-IN">en-IN</option>
+                      )}
+                      {!usedAccents.includes('en-US') && (
+                        <option value="en-US">en-US</option>
+                      )}
+                      {!usedAccents.includes('en-GB') && (
+                        <option value="en-GB">en-GB</option>
+                      )}
+                    </select>
+
+                    <input
+                      type="file"
+                      name="audio"
+                      accept="audio/*"
+                      required
+                      className="text-sm"
+                    />
+
+                    <button
+                      type="submit"
+                      className="px-3 py-1 bg-indigo-600 text-white rounded"
+                    >
+                      Upload
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setActiveLineId(null)}
+                      className="px-3 py-1 border rounded"
+                    >
+                      Cancel
+                    </button>
+                  </form>
+                ) : (
+                  <button
+                    onClick={() => setActiveLineId(l.id)}
+                    className="ml-4 text-sm text-indigo-600 underline"
+                  >
+                    + Add Voice
+                  </button>
+                )}
               </div>
-
-              {/* Add Voice */}
-              {activeLineId === l.id ? (
-                <form
-                  onSubmit={async (e) => {
-                    e.preventDefault()
-
-                    const formData = new FormData(e.target)
-                    formData.append('line_id', l.id)
-
-                    await fetch('/api/admin/talkrehearsel/voices', {
-                      method: 'POST',
-                      body: formData
-                    })
-
-                    setVoiceAccent('')
-                    setActiveLineId(null)
-                    fetchSituation()
-                    toast.success('Voice added')
-                  }}
-                  className="ml-4 flex gap-2 items-center"
-                >
-                  <select
-                    name="accent"
-                    required
-                    className="border rounded px-2 py-1"
-                  >
-                    <option value="">Accent</option>
-                    <option value="en-IN">en-IN</option>
-                    <option value="en-US">en-US</option>
-                    <option value="en-GB">en-GB</option>
-                  </select>
-
-                  <input
-                    type="file"
-                    name="audio"
-                    accept="audio/*"
-                    required
-                    className="text-sm"
-                  />
-
-                  <button
-                    type="submit"
-                    className="px-3 py-1 bg-indigo-600 text-white rounded"
-                  >
-                    Upload
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveLineId(null)}
-                    className="px-3 py-1 border rounded"
-                  >
-                    Cancel
-                  </button>
-                </form>
-              ) : (
-                <button
-                  onClick={() => setActiveLineId(l.id)}
-                  className="ml-4 text-sm text-indigo-600 underline"
-                >
-                  + Add Voice
-                </button>
-              )}
-
-            </div>
-          ))}
-
+            )
+          })}
         </div>
+
+
+        { situation.actors.length === 0 && (
+          <p className="text-sm text-amber-600 mb-3">
+            Add at least one actor before creating lines.
+          </p>
+        )}
+
 
         {/* Add Line */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
@@ -338,6 +361,7 @@ export default function ManageSituation() {
 
           <button
             onClick={addLine}
+            disabled={situation.actors.length === 0}
             className="md:col-span-4 px-4 py-2 bg-green-600 text-white rounded"
           >
             Add Line

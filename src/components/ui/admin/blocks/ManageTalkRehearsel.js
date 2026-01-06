@@ -145,13 +145,6 @@ export default function ManageTalkRehearsel() {
                     </button>
 
                     <button
-                      onClick={() => toast.info('Edit coming soon')}
-                      className="p-2 rounded-md text-indigo-600 hover:bg-indigo-50"
-                    >
-                      <Pencil size={16} />
-                    </button>
-
-                    <button
                       onClick={() => confirmDelete(s.id)}
                       className="p-2 rounded-md text-red-600 hover:bg-red-50"
                     >
