@@ -18,15 +18,18 @@ export default function AboutPage() {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-600 via-cyan-600 to-emerald-600 bg-clip-text text-transparent">
                 About TalkRehearsel
               </h1>
+
               <p className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-                TalkRehearsel is a production-ready application foundation designed to help teams and individuals
-                build real-world products faster and with confidence. It provides a structured yet flexible
-                base that removes repetitive setup work and lets you focus on what truly matters — your product.
+                TalkRehearsel is an interactive conversation practice platform designed to help people
+                speak with confidence in real-world situations. Whether it’s interviews, meetings,
+                daily conversations, or professional communication, TalkRehearsel provides a safe,
+                guided environment to practice before it matters.
               </p>
+
               <p className="mt-4 text-base sm:text-lg text-gray-700 leading-relaxed">
-                From authentication and dashboards to system settings and extensible modules,
-                TalkRehearsel acts as a reliable core that adapts to different use cases without enforcing
-                unnecessary constraints or opinions.
+                By combining structured scenarios, voice playback, and user-recorded responses,
+                TalkRehearsel bridges the gap between theory and real communication — helping users
+                improve clarity, fluency, and confidence through repetition and feedback.
               </p>
             </div>
 
@@ -37,15 +40,21 @@ export default function AboutPage() {
                 alt="Creator"
                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border border-gray-200 shadow-sm"
               />
+
               <div>
                 <h3 className="text-base sm:text-lg font-semibold text-gray-900 relative inline-block">
-                  Project Maintainer
+                  Creator & Maintainer
                   <span className="absolute left-0 -bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500 rounded"></span>
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-500">Architecture & Engineering</p>
+
+                <p className="text-xs sm:text-sm text-gray-500">
+                  Product Design & Engineering
+                </p>
+
                 <p className="mt-2 text-sm sm:text-base text-gray-700 leading-relaxed max-w-sm">
-                  TalkRehearsel was created to serve as a stable, reusable foundation for building practical
-                  software products. The focus is on clarity, maintainability, and long-term sustainability.
+                  TalkRehearsel is built with a focus on real usability — clean design, reliable
+                  systems, and practical features that support continuous improvement rather than
+                  one-time learning.
                 </p>
               </div>
             </div>
@@ -54,23 +63,35 @@ export default function AboutPage() {
 
         {/* Mission Section */}
         <section className="mt-16 sm:mt-20 rounded-3xl bg-gradient-to-br from-blue-600 via-cyan-600 to-emerald-600 text-white shadow-lg px-4 sm:px-6 md:px-8 py-12 sm:py-14 md:py-16 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">Our Mission</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+            Our Mission
+          </h2>
+
           <p className="mt-4 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
-            TalkRehearsel exists to reduce friction in software development by providing a solid,
-            extensible foundation that scales from small utilities to larger production systems.
+            Our mission is to make confident communication accessible to everyone by transforming
+            practice into a structured, repeatable, and engaging experience.
           </p>
+
           <p className="mt-6 sm:mt-8 italic text-lg sm:text-xl md:text-2xl opacity-90">
-            “A strong foundation enables faster progress and better decisions.”
+            “Practice conversations before real conversations.”
           </p>
         </section>
 
         {/* Philosophy Section */}
         <section className="mt-16 sm:mt-20 rounded-3xl bg-gray-50 px-4 sm:px-6 md:px-8 py-12 sm:py-14 md:py-16 text-center shadow-inner">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">Design Philosophy</h2>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+            Design Philosophy
+          </h2>
+
           <p className="mt-4 text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
-            TalkRehearsel is built with a balance of structure and flexibility. It avoids unnecessary abstraction
-            while providing sensible defaults that encourage consistency, readability, and maintainability.
-            The goal is not to dictate how products should be built, but to support how they naturally evolve.
+            TalkRehearsel is designed to feel calm, focused, and purposeful. Every interaction is
+            intentional — from guided audio playback to structured practice flows — ensuring users
+            can focus on learning without distraction.
+          </p>
+
+          <p className="mt-4 text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
+            The platform emphasizes clarity over complexity, real practice over passive learning,
+            and long-term confidence over short-term performance.
           </p>
         </section>
       </div>

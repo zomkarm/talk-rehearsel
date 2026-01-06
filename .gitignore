@@ -51,7 +51,9 @@ next-env.d.ts
 # Ignore everything in profile_pics
 /public/profile_pics/*
 /public/uploads/talkrehearsel/voices/*
+/public/uploads/talkrehearsel/recordings/*
 
 # But keep default.svg
 !/public/profile_pics/default.png
+!/public/uploads/talkrehearsel/recordings/placeholder.txt
 !/public/uploads/talkrehearsel/voices/placeholder.txt

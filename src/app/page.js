@@ -43,18 +43,14 @@ export default function HomePage() {
   return (
     <>
       <div className={`${inter.variable} ${playfair.variable} min-h-screen`}>
-        {/* Gradient Background */}
-        <ParticleBackground />  
-
+        
       {/* <div className="fixed inset-0 -z-10 bg-gradient-to-br from-violet-200 via-indigo-100 to-crimson-200"></div> */ }
-        <div className="max-w-7xl mx-auto px-2 md:px-2 lg:px-2 py-8 lg:py-6">
           {/* Header */}
           <Header />
 
           {/* HERO */}
           <Hero />
-        </div>
-
+        
         {/*<section className="relative w-full bg-gradient-to-b from-gray-50 via-white to-gray-100 py-24">
           <style jsx>{`
             @keyframes fadeUp {

@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="mt-16 bg-gray-800 text-gray-200 border-t border-gray-700">
+    <footer className="relative w-screen bottom-0 mt-16 bg-gray-800 text-gray-200 border-t border-gray-700">
       <div className="max-w-7xl mx-auto px-4 py-10 flex flex-col md:flex-row items-center justify-between text-sm sans">
         
         {/* Left: Brand */}

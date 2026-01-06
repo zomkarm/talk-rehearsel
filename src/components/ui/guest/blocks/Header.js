@@ -16,7 +16,8 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between h-16 px-6 md:px-12 bg-white border-b border-gray-200 md:border-none">
+      <header className="fixed  top-0 left-0 right-0 z-40 flex items-center justify-between h-16 px-6 md:px-12 border-b border-gray-200 md:border-none">
+
         {/* Logo */}
         <div className="flex items-center">
           <img
