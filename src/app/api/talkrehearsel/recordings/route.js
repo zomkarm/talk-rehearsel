@@ -17,49 +17,111 @@ export async function GET(req) {
     const limit = Number(searchParams.get('limit') || 5)
     const skip = (page - 1) * limit
 
-    const where = {
-      user_id: user.id,
-      line: {
-        situation: {
+    /* --------------------------------
+        Fetch situations (PAGINATED)
+    --------------------------------- */
+    const [situations, total] = await Promise.all([
+      prisma.situation.findMany({
+        where: {
           title: {
             contains: search,
             mode: 'insensitive',
           },
-        },
-      },
-    }
-
-    const [recordings, total] = await Promise.all([
-      prisma.recording.findMany({
-        where,
-        include: {
-          line: {
-            include: {
-              actor: true,
-              voices: true,
-              situation: {
-                select: { id: true, title: true },
+          lines: {
+            some: {
+              recordings: {
+                some: {
+                  user_id: user.id,
+                },
               },
             },
           },
         },
-        orderBy: [
-          { line: { situation_id: 'asc' } },
-          { line: { order: 'asc' } },
-        ],
+        orderBy: { created_at: 'desc' },
         skip,
         take: limit,
+        select: {
+          id: true,
+          title: true,
+        },
       }),
-      prisma.recording.count({ where }),
+
+      prisma.situation.count({
+        where: {
+          title: {
+            contains: search,
+            mode: 'insensitive',
+          },
+          lines: {
+            some: {
+              recordings: {
+                some: {
+                  user_id: user.id,
+                },
+              },
+            },
+          },
+        },
+      }),
     ])
 
+    const situationIds = situations.map(s => s.id)
+
+    /* --------------------------------
+       Fetch ALL recordings for those situations
+    --------------------------------- */
+    const recordings = await prisma.recording.findMany({
+      where: {
+        user_id: user.id,
+        line: {
+          situation_id: {
+            in: situationIds,
+          },
+        },
+      },
+      include: {
+        line: {
+          include: {
+            actor: true,
+            voices: true,
+            situation: true,
+          },
+        },
+      },
+      orderBy: {
+        line: { order: 'asc' },
+      },
+    })
+
+    /* --------------------------------
+       Shape response by situation
+    --------------------------------- */
+    const map = {}
+
+    situations.forEach(s => {
+      map[s.id] = {
+        situation: s,
+        lines: [],
+      }
+    })
+
+    recordings.forEach(r => {
+      map[r.line.situation_id].lines.push({
+        line: r.line,
+        recording: r,
+      })
+    })
+
     return NextResponse.json({
-      recordings,
+      situations: Object.values(map),
       totalPages: Math.ceil(total / limit),
     })
   } catch (err) {
     console.error('GET recordings error:', err)
-    return NextResponse.json({ error: 'Failed to fetch recordings' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to fetch recordings' },
+      { status: 500 }
+    )
   }
 }
 

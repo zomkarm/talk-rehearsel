@@ -186,7 +186,7 @@ export default function PracticeView({
         <button className="underline" onClick={onBack}>
           Back
         </button>
-        <button className="underline" onClick={onBackToRecordings}>
+        <button className="underline pl-4" onClick={onBackToRecordings}>
           View Recordings
         </button>
       </div>
