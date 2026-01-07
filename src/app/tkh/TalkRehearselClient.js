@@ -204,6 +204,9 @@ export default function TalkRehearselClient() {
               setState("PRACTICING");
             }}
             onBack={() => setState("MODE_SELECTED")}
+            onBackToRecordings={()=>{
+              router.push('/recordings')
+            }}
           />
         )}
 
@@ -213,6 +216,9 @@ export default function TalkRehearselClient() {
             accent={accent}
             selectedActor={selectedActor}
             onBack={() => setState("MODE_SELECTED")}
+            onBackToRecordings={()=>{
+              router.push('/recordings')
+            }}
           />
         )}
       </div>

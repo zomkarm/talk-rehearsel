@@ -7,13 +7,19 @@ export default function RecordingsPage() {
   const [groups, setGroups] = useState([])
   const [loading, setLoading] = useState(true)
   const [playingSituationId, setPlayingSituationId] = useState(null)
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+
 
   const audioRef = useRef(null)
 
   useEffect(() => {
     async function fetchRecordings() {
       try {
-        const res = await fetch('/api/talkrehearsel/recordings')
+        const res = await fetch(
+                      `/api/talkrehearsel/recordings?search=${search}&page=${page}`
+                    )
         const data = await res.json()
 
         /**
@@ -50,33 +56,23 @@ export default function RecordingsPage() {
   /* --------------------------------
      Playback Logic
   --------------------------------- */
-  function playConversation(group) {
+  async function playConversation(group) {
     if (playingSituationId === group.situation.id) {
       audioRef.current?.pause()
       setPlayingSituationId(null)
       return
     }
 
-    const timeline = []
+    setPlayingSituationId(group.situation.id)
 
-    const sortedLines = [...group.lines]
-      .map(l => l.line)
-      .sort((a, b) => a.order - b.order)
+    const res = await fetch(
+      `/api/talkrehearsel/conversations/${group.situation.id}`
+    )
+    const data = await res.json()
 
-    sortedLines.forEach(line => {
-      const userRec = group.lines.find(
-        r => r.line.id === line.id
-      )?.recording
-
-      if (userRec) {
-        timeline.push(userRec.audio_src)
-      } else {
-        const voice = line.voices[0]
-        if (voice?.audio_src) {
-          timeline.push(voice.audio_src)
-        }
-      }
-    })
+    const timeline = data.conversation
+      .filter(turn => turn.audio?.src)
+      .map(turn => turn.audio.src)
 
     let index = 0
 
@@ -97,9 +93,9 @@ export default function RecordingsPage() {
       audio.play().catch(() => {})
     }
 
-    setPlayingSituationId(group.situation.id)
     playNext()
   }
+
 
   /* --------------------------------
      UI
@@ -148,15 +144,30 @@ export default function RecordingsPage() {
                 </p>
               </div>
 
-              <button
-                onClick={() => playConversation(group)}
-                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg"
-              >
-                <Play size={16} />
-                {playingSituationId === group.situation.id
-                  ? 'Stop'
-                  : 'Play'}
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => playConversation(group)}
+                  className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg"
+                >
+                  <Play size={16} />
+                  {playingSituationId === group.situation.id
+                    ? 'Stop'
+                    : 'Play'}
+                </button>
+                <button
+                  onClick={async () => {
+                    await fetch('/api/talkrehearsel/recordings', {
+                      method: 'DELETE',
+                      body: JSON.stringify({ situationId: group.situation.id }),
+                    })
+                    location.reload()
+                  }}
+                  className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg"
+                >
+                  Delete
+                </button>
+              </div>
+
             </div>
 
             {/* Timeline Preview */}

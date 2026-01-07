@@ -1,6 +1,6 @@
 import { User, ArrowLeft } from "lucide-react";
 
-export default function ActorSelector({ actors, onSelect, onBack }) {
+export default function ActorSelector({ actors, onSelect, onBack, onBackToRecordings }) {
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -65,6 +65,13 @@ export default function ActorSelector({ actors, onSelect, onBack }) {
       >
         <ArrowLeft className="w-4 h-4" />
         Back
+      </button>
+      <button
+        onClick={onBackToRecordings}
+        className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Check Previous Recording
       </button>
     </div>
   );

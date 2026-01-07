@@ -8,7 +8,8 @@ export default function PracticeView({
   situation,
   accent,
   selectedActor,
-  onBack
+  onBack,
+  onBackToRecordings
 }) {
   const lines = [...situation.lines].sort((a, b) => a.order - b.order);
   const [profile, setProfile] = useState(null)
@@ -184,6 +185,9 @@ export default function PracticeView({
         <h2 className="text-xl font-semibold">Practice complete 🎉</h2>
         <button className="underline" onClick={onBack}>
           Back
+        </button>
+        <button className="underline" onClick={onBackToRecordings}>
+          View Recordings
         </button>
       </div>
     );

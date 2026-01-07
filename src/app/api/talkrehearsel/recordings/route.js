@@ -6,44 +6,63 @@ import { getUserFromToken } from "@/lib/auth";
 
 export async function GET(req) {
   try {
-    const user = await getUserFromToken();
-    
+    const user = await getUserFromToken()
     if (!user?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const recordings = await prisma.recording.findMany({
-      where: {
-        user_id: user.id,
+    const { searchParams } = new URL(req.url)
+    const search = searchParams.get('search') || ''
+    const page = Number(searchParams.get('page') || 1)
+    const limit = Number(searchParams.get('limit') || 5)
+    const skip = (page - 1) * limit
+
+    const where = {
+      user_id: user.id,
+      line: {
+        situation: {
+          title: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
       },
-      include: {
-        line: {
-          include: {
-            actor: true,
-            voices: true,
-            situation: {
-              select: {
-                id: true,
-                title: true,
+    }
+
+    const [recordings, total] = await Promise.all([
+      prisma.recording.findMany({
+        where,
+        include: {
+          line: {
+            include: {
+              actor: true,
+              voices: true,
+              situation: {
+                select: { id: true, title: true },
               },
             },
           },
         },
-      },
-      orderBy: {
-        created_at: "asc",
-      },
-    });
+        orderBy: [
+          { line: { situation_id: 'asc' } },
+          { line: { order: 'asc' } },
+        ],
+        skip,
+        take: limit,
+      }),
+      prisma.recording.count({ where }),
+    ])
 
-    return NextResponse.json({ recordings });
+    return NextResponse.json({
+      recordings,
+      totalPages: Math.ceil(total / limit),
+    })
   } catch (err) {
-    console.error("GET recordings error:", err);
-    return NextResponse.json(
-      { error: "Failed to fetch recordings" },
-      { status: 500 }
-    );
+    console.error('GET recordings error:', err)
+    return NextResponse.json({ error: 'Failed to fetch recordings' }, { status: 500 })
   }
 }
+
 
 export async function POST(req) {
   try {
@@ -104,5 +123,40 @@ export async function POST(req) {
       { error: "Failed to save recording" },
       { status: 500 }
     );
+  }
+}
+
+export async function DELETE(req) {
+  try {
+    const user = await getUserFromToken()
+    if (!user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const { situationId } = await req.json()
+
+    const recordings = await prisma.recording.findMany({
+      where: {
+        user_id: user.id,
+        line: { situation_id: situationId },
+      },
+    })
+
+    for (const r of recordings) {
+      const filePath = path.join(process.cwd(), 'public', r.audio_src)
+      if (fs.existsSync(filePath)) fs.unlinkSync(filePath)
+    }
+
+    await prisma.recording.deleteMany({
+      where: {
+        user_id: user.id,
+        line: { situation_id: situationId },
+      },
+    })
+
+    return NextResponse.json({ success: true })
+  } catch (err) {
+    console.error('DELETE recordings error:', err)
+    return NextResponse.json({ error: 'Failed to delete recordings' }, { status: 500 })
   }
 }

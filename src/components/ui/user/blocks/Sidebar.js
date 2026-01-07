@@ -4,26 +4,7 @@ import { Home, Trash2, Users, Laptop, School, Star, Receipt, AudioLines, Video }
 //const starredPages = [{id:1,title:'Sample1'},{id:2,title:'Sample2'}]
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
-  const [starredPages, setStarredPages] = useState([])
   const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchStarred = async () => {
-      try {
-        setLoading(true)
-        const res = await fetch('/api/page/starred', { credentials: 'include' })
-        if (!res.ok) throw new Error('Failed to fetch starred pages')
-        const data = await res.json()
-        setStarredPages(data)
-      } catch (err) {
-        console.error(err)
-        setStarredPages([])
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchStarred()
-  }, [])
 
   return (
     <aside
