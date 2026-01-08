@@ -94,6 +94,7 @@ export default function Header(props) {
       {/* Right actions */}
       <div className="flex items-center gap-4">
         {/* Plan badge */}
+        {/*
         <span
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm
             ${plan === 'Pro'
@@ -112,7 +113,7 @@ export default function Header(props) {
               <a href="/pricing">Basic</a>
             </>
           )}
-        </span>
+        </span>*/}
 
         {/* Profile */}
         <div className="relative" ref={dropdownRef}>

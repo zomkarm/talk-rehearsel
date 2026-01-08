@@ -94,6 +94,39 @@ export default function AboutPage() {
             and long-term confidence over short-term performance.
           </p>
         </section>
+
+        {/* Support Section */}
+      <section className="mt-4 sm:mt-20 rounded-3xl bg-white px-4 sm:px-6 md:px-8 py-12 sm:py-14 md:py-16 text-center border border-gray-100 shadow-sm">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+          Free & Community-Supported
+        </h2>
+
+        <p className="mt-4 text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
+          TalkRehearsel is free to use and built as an independent project focused on real-world
+          speaking practice. There are no ads, no subscriptions, and no locked features.
+        </p>
+
+        <p className="mt-4 text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
+          If this platform helps you practice speaking with more confidence, you can choose to
+          support its development and ongoing maintenance.
+        </p>
+
+        <div className="mt-8">
+          <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-yellow-400 text-gray-900 font-medium hover:bg-yellow-300 transition"
+          >
+            ☕ Support TalkRehearsel
+          </a>
+        </div>
+
+        <p className="mt-4 text-sm text-gray-500">
+          Support is completely optional.
+        </p>
+      </section>
+
       </div>
 
       <Footer />

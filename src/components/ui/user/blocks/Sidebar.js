@@ -69,7 +69,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
                 </a>
               </li>
 
-              <li>
+              {/*<li>
                 <a
                   href="/billing"
                   className="flex items-center gap-2 px-3 py-2 rounded-md 
@@ -78,7 +78,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
                 >
                   <Receipt size={18} strokeWidth={2} /> Billing
                 </a>
-              </li>
+              </li>*/}
 
               <li>
                 <a

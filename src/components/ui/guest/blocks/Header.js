@@ -36,7 +36,7 @@ export default function Header() {
         <div className="hidden md:flex items-center gap-10">
           {/* Nav */}
           <nav className="flex items-center gap-8 text-sm font-semibold tracking-wide">
-            {["About", "Contact", "Pricing"].map((label) => {
+            {["About", "Contact"].map((label) => {  // add "Pricing" later if needed
               const href = `/${label.toLowerCase()}`;
               return (
                 <a
@@ -120,7 +120,7 @@ export default function Header() {
             <nav className="flex-1 px-4 py-6 font-semibold flex flex-col gap-4 text-gray-700">
               <a href="/about" className="hover:text-indigo-600 transition-colors" onClick={() => setIsOpen(false)}>About</a>
               <a href="/contact" className="hover:text-indigo-600 transition-colors" onClick={() => setIsOpen(false)}>Contact</a>
-              <a href="/pricing" className="hover:text-indigo-600 transition-colors" onClick={() => setIsOpen(false)}>Pricing</a>
+              {/*<a href="/pricing" className="hover:text-indigo-600 transition-colors" onClick={() => setIsOpen(false)}>Pricing</a>*/}
 
               {isLoggedIn ? (
                 <a

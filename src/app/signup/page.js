@@ -137,12 +137,12 @@ export default function SignupPage() {
             Sign Up
           </button>
 
-          <button
+          {/*<button
   type="button"
   onClick={() => (window.location.href = '/api/auth/google')}
   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-300 bg-white text-gray-700 font-medium shadow-sm hover:shadow-md hover:scale-[1.01] transition"
 >
-  {/* Google logo SVG */}
+  
   <svg
     className="w-5 h-5"
     xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +166,7 @@ export default function SignupPage() {
     />
   </svg>
   <span>Sign Up with Google</span>
-</button>
+</button>*/}
 
 
 

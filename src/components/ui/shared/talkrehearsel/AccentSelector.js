@@ -3,7 +3,6 @@
 import { ArrowLeft, Mic } from "lucide-react";
 
 const ACCENTS = [
-  { code: "en-IN", label: "Indian English" },
   { code: "en-US", label: "American English" },
   { code: "en-GB", label: "British English" },
 ];

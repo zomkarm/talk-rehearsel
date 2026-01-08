@@ -72,12 +72,12 @@ export default function LoginPage() {
           )}
 
           {/* Google Sign-In Button */}
-          <button
+          {/*<button
             type="button"
             onClick={() => (window.location.href = '/api/auth/google')}
             className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-gray-300 bg-white text-gray-700 font-medium shadow-sm hover:shadow-md hover:scale-[1.01] transition"
           >
-            {/* Google logo */}
+            
             <svg
               className="w-5 h-5"
               xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,7 @@ export default function LoginPage() {
             <div className="flex-grow border-t border-gray-300"></div>
             <span className="text-sm text-gray-500">or</span>
             <div className="flex-grow border-t border-gray-300"></div>
-          </div>
+          </div>*/}
 
           {/* Email */}
           <div>

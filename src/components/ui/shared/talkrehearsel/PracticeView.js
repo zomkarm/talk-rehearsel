@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { toast } from 'sonner'
-import { Mic, Square, SkipForward, ArrowLeft, Loader2 } from "lucide-react";
+import { Mic, Square, SkipForward, ArrowLeft, Loader2, PlayCircle } from "lucide-react";
 
 export default function PracticeView({
   situation,
@@ -234,86 +234,92 @@ export default function PracticeView({
       </div>
 
       {/* User Line Controls */}
-      {isUserLine && (
-        <div className="space-y-4">
-          {!isRecording && !recordedUrl && (
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={startRecording}
-                className="
-                  flex items-center gap-2
-                  px-5 py-2.5
-                  bg-green-600 text-white
-                  rounded-lg
-                  hover:bg-green-700
-                "
-              >
-                <Mic className="w-4 h-4" />
-                Start Recording
-              </button>
+      {/* User Line Controls */}
+{isUserLine && (
+  <div className="space-y-4">
+    {/* BEFORE RECORDING */}
+    {!isRecording && !recordedUrl && (
+      <div className="flex flex-wrap gap-3">
+        <button
+          onClick={startRecording}
+          className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700"
+        >
+          <Mic className="w-4 h-4" />
+          Start Recording
+        </button>
 
-              <button
-                onClick={skipLine}
-                className="
-                  flex items-center gap-2
-                  px-5 py-2.5
-                  border rounded-lg
-                  text-slate-600
-                  hover:bg-slate-50
-                "
-              >
-                <SkipForward className="w-4 h-4" />
-                Skip
-              </button>
-            </div>
-          )}
+        <button
+          onClick={skipLine}
+          className="flex items-center gap-2 px-5 py-2.5 border rounded-lg text-slate-600 hover:bg-slate-50"
+        >
+          <SkipForward className="w-4 h-4" />
+          Skip
+        </button>
 
-          {isRecording && (
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-red-600 font-medium">
-                <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
-                Recording…
-              </div>
+        {/* NEW: Play Reference Audio */}
+        {currentLine.voices.find(v => v.accent === accent)?.audio_src && (
+          <button
+            onClick={() => {
+              const src = currentLine.voices.find(v => v.accent === accent).audio_src;
+              if (audioRef.current) audioRef.current.pause();
+              const audio = new Audio(src);
+              audioRef.current = audio;
+              audio.play();
+            }}
+            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            <PlayCircle className="w-4 h-4" />
+            Play Audio
+          </button>
+        )}
+      </div>
+    )}
 
-              <button
-                onClick={stopRecording}
-                className="
-                  flex items-center gap-2
-                  px-5 py-2.5
-                  bg-red-600 text-white
-                  rounded-lg
-                  hover:bg-red-700
-                "
-              >
-                <Square className="w-4 h-4" />
-                Stop
-              </button>
-            </div>
-          )}
-
-          {recordedUrl && (
-            <div className="space-y-3">
-              <audio
-                controls
-                src={recordedUrl}
-                className="w-full rounded"
-              />
-
-              <button
-                onClick={goNext}
-                className="
-                  px-5 py-2.5
-                  bg-indigo-600 text-white
-                  rounded-lg
-                  hover:bg-indigo-700
-                "
-              >
-                Continue
-              </button>
-            </div>
-          )}
+    {/* DURING RECORDING */}
+    {isRecording && (
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 text-red-600 font-medium">
+          <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
+          Recording…
         </div>
-      )}
+
+        <button
+          onClick={stopRecording}
+          className="flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700"
+        >
+          <Square className="w-4 h-4" />
+          Stop
+        </button>
+      </div>
+    )}
+
+    {/* AFTER RECORDING */}
+    {recordedUrl && (
+      <div className="space-y-3">
+        <audio controls src={recordedUrl} className="w-full rounded" />
+
+        <div className="flex gap-3">
+          {/* NEW: Retry Button */}
+          <button
+            onClick={() => setRecordedUrl(null)}
+            className="px-5 py-2.5 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+          >
+            Retry
+          </button>
+
+          {/* Continue Button */}
+          <button
+            onClick={goNext}
+            className="px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+          >
+            Continue
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+)}
+
 
       {/* Back */}
       <button
