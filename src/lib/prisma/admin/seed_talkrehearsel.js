@@ -824,7 +824,7 @@ export async function TalkRehearselSeeder() {
     /* --------------------------------
        WRITE AUDIO MANIFEST
     --------------------------------- */
-    const manifestPath = path.join(
+    /*const manifestPath = path.join(
       process.cwd(),
       "talkrehearsel-audio-manifest.json"
     );
@@ -832,7 +832,7 @@ export async function TalkRehearselSeeder() {
     fs.writeFileSync(
       manifestPath,
       JSON.stringify(audioManifest, null, 2)
-    );
+    );*/
 
     console.log("✅ TalkRehearsel seeding completed");
     console.log(`🎧 Audio manifest saved at: ${manifestPath}`);
