@@ -26,7 +26,13 @@ ChartJS.register(
 )
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState({ users: 0, active: 0, subjects: 0, lessons: 0 })
+  const [stats, setStats] = useState({
+                                      users: 0,
+                                      active: 0,
+                                      situations: 0,
+                                      unscripted: 0,
+                                    })
+
   const [userGrowthData, setUserGrowthData] = useState({
     labels: [],
     datasets: [
@@ -117,18 +123,20 @@ export default function AdminDashboard() {
         />
         <StatCard
           icon={<BookOpen className="h-6 w-6 text-teal-600" />}
-          label="Subjects"
-          value={stats.subjects}
+          label="Situations"
+          value={stats.situations}
           color="from-teal-500 to-cyan-600"
-          trend="Stable"
+          trend="Scripted practice"
         />
+
         <StatCard
           icon={<Layers className="h-6 w-6 text-purple-600" />}
-          label="Lessons"
-          value={stats.lessons}
+          label="Unscripted Prompts"
+          value={stats.unscripted}
           color="from-purple-500 to-fuchsia-600"
-          trend="+8 new"
+          trend="Speaking drills"
         />
+
       </div>
 
       {/* Charts */}

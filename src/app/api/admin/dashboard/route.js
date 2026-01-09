@@ -3,95 +3,120 @@ import prisma from '@/lib/prisma/client'
 
 export async function GET() {
   try {
-    // KPI stats
-    const totalUsers = await prisma.user.count()
-    const activeLearners = await prisma.progress.count({
-      where: { status: 'IN_PROGRESS' }
-    })
-    const subjects = await prisma.subject.count()
-    const lessons = await prisma.lesson.count()
+    /* ----------------------------
+       KPI STATS
+    ----------------------------- */
+    const [
+      totalUsers,
+      activeSubscribers,
+      totalSituations,
+      totalUnscripted,
+    ] = await Promise.all([
+      prisma.user.count(),
+      prisma.subscription.count({
+        where: { status: 'ACTIVE' },
+      }),
+      prisma.situation.count(),
+      prisma.unscriptedQuestion.count(),
+    ])
 
-    // User growth (last 6 months registrations)
+    /* ----------------------------
+       USER GROWTH (LAST 6 MONTHS)
+    ----------------------------- */
     const now = new Date()
-    const sixMonthsAgo = new Date()
-    sixMonthsAgo.setMonth(now.getMonth() - 5)
+    const start = new Date()
+    start.setMonth(now.getMonth() - 5)
 
-    const registrations = await prisma.user.findMany({
-      where: { created_at: { gte: sixMonthsAgo } },
+    const users = await prisma.user.findMany({
+      where: { created_at: { gte: start } },
       select: { created_at: true },
     })
 
-    // Bucket by month
-    const monthBuckets = Array.from({ length: 6 }).map((_, i) => {
-      const d = new Date(sixMonthsAgo)
-      d.setMonth(sixMonthsAgo.getMonth() + i)
+    const months = Array.from({ length: 6 }).map((_, i) => {
+      const d = new Date(start)
+      d.setMonth(start.getMonth() + i)
       return {
         month: d.toLocaleString('default', { month: 'short' }),
         count: 0,
       }
     })
 
-    registrations.forEach(r => {
-      const month = r.created_at.toLocaleString('default', { month: 'short' })
-      const bucket = monthBuckets.find(b => b.month === month)
+    users.forEach(u => {
+      const m = u.created_at.toLocaleString('default', { month: 'short' })
+      const bucket = months.find(b => b.month === m)
       if (bucket) bucket.count++
     })
 
-    const userGrowthData = monthBuckets
-
-    // Module usage (example: count lessons, pages, components)
-    const learnersSpaceUsage = await prisma.lesson.count()
-    const pageTutorUsage = await prisma.page.count()
-    const semanticBuilderUsage = await prisma.uIComponent.count() // note: check model name casing
+    /* ----------------------------
+       MODULE USAGE
+    ----------------------------- */
+    const [lineCount] = await Promise.all([
+      prisma.line.count(),
+    ])
 
     const moduleUsageData = [
-      { label: 'Learners Space', value: learnersSpaceUsage },
-      { label: 'PageTutor', value: pageTutorUsage },
-      { label: 'Semantic Builder', value: semanticBuilderUsage },
+      { label: 'Situations', value: totalSituations },
+      { label: 'Dialog Lines', value: lineCount },
+      { label: 'Unscripted Prompts', value: totalUnscripted },
     ]
 
-    // Recent activity (latest 5 actions)
-    const recentProjectActions = await prisma.projectAction.findMany({
-      orderBy: { timestamp: 'desc' },
-      take: 5,
-      include: { user: true, project: true },
-    })
-    const recentPageActions = await prisma.pageAction.findMany({
-      orderBy: { timestamp: 'desc' },
-      take: 5,
-      include: { user: true, page: true },
-    })
+    /* ----------------------------
+       RECENT ACTIVITY
+    ----------------------------- */
+    const [recentUsers, recentRecordings, recentQuestions] =
+      await Promise.all([
+        prisma.user.findMany({
+          take: 3,
+          orderBy: { created_at: 'desc' },
+          select: { name: true, created_at: true },
+        }),
+        prisma.recording.findMany({
+          take: 3,
+          orderBy: { created_at: 'desc' },
+          include: { line: true },
+        }),
+        prisma.unscriptedQuestion.findMany({
+          take: 3,
+          orderBy: { createdAt: 'desc' },
+        }),
+      ])
 
     const recentActivity = [
-      ...recentProjectActions.map(a => ({
-        type: 'project',
-        action: a.action,
-        user: a.user?.name ?? 'Unknown',
-        target: a.project?.title ?? 'Untitled',
-        time: a.timestamp,
+      ...recentUsers.map(u => ({
+        action: 'New user registered',
+        target: u.name,
+        time: u.created_at,
       })),
-      ...recentPageActions.map(a => ({
-        type: 'page',
-        action: a.action,
-        user: a.user?.name ?? 'Unknown',
-        target: a.page?.title ?? 'Untitled',
-        time: a.timestamp,
+      ...recentRecordings.map(r => ({
+        action: 'Recorded line',
+        target: r.line.text.slice(0, 40) + '...',
+        time: r.created_at,
       })),
-    ].sort((a, b) => b.time - a.time).slice(0, 5)
+      ...recentQuestions.map(q => ({
+        action: 'Added unscripted question',
+        target: q.level,
+        time: q.createdAt,
+      })),
+    ]
+      .sort((a, b) => b.time - a.time)
+      .slice(0, 5)
 
     return NextResponse.json({
       stats: {
         users: totalUsers,
-        active: activeLearners,
-        subjects,
-        lessons,
+        active: activeSubscribers,
+        situations: totalSituations,
+        unscripted: totalUnscripted,
       },
-      userGrowthData,
+      userGrowthData: months,
       moduleUsageData,
       recentActivity,
     })
   } catch (error) {
     console.error('Dashboard API error:', error)
-    return NextResponse.json({ error: 'Failed to fetch dashboard data' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to load dashboard' },
+      { status: 500 }
+    )
   }
 }

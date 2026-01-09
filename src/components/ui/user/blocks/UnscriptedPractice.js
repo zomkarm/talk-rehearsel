@@ -8,6 +8,7 @@ export default function UnscriptedPractice() {
   const [recording, setRecording] = useState(false)
   const [mediaType, setMediaType] = useState(null) // 'audio' | 'video'
   const [recordedUrl, setRecordedUrl] = useState(null)
+  const [category, setCategory] = useState('casual')
 
   const mediaRecorderRef = useRef(null)
   const mediaStreamRef = useRef(null)
@@ -22,7 +23,7 @@ export default function UnscriptedPractice() {
     setRecordedUrl(null)
 
     try {
-      const res = await fetch('/api/unscripted-practice/random')
+      const res = await fetch(`/api/unscripted-practice/random?category=${category}`)
       const data = await res.json()
       console.log(data)
       setQuestion(data)
@@ -80,6 +81,10 @@ export default function UnscriptedPractice() {
     setRecording(false)
   }
 
+  const handleChangeCategory = (event) => {
+    setCategory(event.target.value);
+  }
+
   return (
     <main className="flex-1 bg-white p-6 mt-2 border-2 rounded-tl-xl overflow-y-auto">
       <div className="max-w-5xl mx-auto space-y-14 text-center mt-6 mb-32">
@@ -114,6 +119,29 @@ export default function UnscriptedPractice() {
           <h2 className="text-lg font-semibold text-gray-800">
             Get a speaking prompt
           </h2>
+
+          <div className="flex flex-col items-center gap-2">
+            <label className="text-sm font-medium text-gray-600">
+              Choose a context
+            </label>
+
+            <select
+              value={category}
+              onChange={handleChangeCategory}
+              className="px-4 py-2 rounded-lg border border-gray-300 bg-white
+                         text-gray-800 shadow-sm focus:outline-none focus:ring-2
+                         focus:ring-indigo-400 transition"
+            >
+              <option value="casual">Casual — everyday topics</option>
+              <option value="social">Social — opinions & experiences</option>
+              <option value="professional">Professional — work & interviews</option>
+            </select>
+
+            <p className="text-xs text-gray-500 max-w-sm">
+              Pick what feels comfortable. You can change this anytime.
+            </p>
+          </div>
+
 
           <button
             onClick={fetchRandomQuestion}
@@ -178,8 +206,8 @@ export default function UnscriptedPractice() {
                 )}
               </div>
               <p className="text-xs text-gray-500 mt-2">
-  No one else will see or hear this — it’s just you practicing.
-</p>
+                No one else will see or hear this — it’s just you practicing.
+              </p>
 
             </div>
 

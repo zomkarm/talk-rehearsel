@@ -1,24 +1,30 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma/client'
 
-export async function GET() {
+export async function GET(req) {
   try {
-    // Count total questions
-    const total = await prisma.unscriptedQuestion.count()
+    const { searchParams } = new URL(req.url)
+    const category = searchParams.get('category') || 'casual'
+
+    const total = await prisma.unscriptedQuestion.count({
+      where: { level: category, isActive: true },
+    })
 
     if (total === 0) {
       return NextResponse.json(
-        { error: 'No questions available' },
+        { error: 'No questions available for this category' },
         { status: 404 }
       )
     }
 
-    // Pick random offset
     const randomOffset = Math.floor(Math.random() * total)
 
-    // Fetch one random question
     const question = await prisma.unscriptedQuestion.findFirst({
       skip: randomOffset,
+      where: {
+        level: category,
+        isActive: true,
+      },
       select: {
         id: true,
         question: true,
