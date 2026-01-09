@@ -835,7 +835,6 @@ export async function TalkRehearselSeeder() {
     );*/
 
     console.log("✅ TalkRehearsel seeding completed");
-    console.log(`🎧 Audio manifest saved at: ${manifestPath}`);
   } catch (error) {
     console.error("❌ Failed to seed TalkRehearsel:", error);
   }
