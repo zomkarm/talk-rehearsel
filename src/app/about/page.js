@@ -33,31 +33,45 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* Right: Creator Info */}
-            <div className="flex flex-col sm:flex-row md:flex-col items-start gap-4 sm:gap-6 bg-white rounded-xl shadow-md p-4 sm:p-6 border border-gray-100 hover:shadow-lg transition">
-              <img
-                src="/profile.jpg"
-                alt="Creator"
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border border-gray-200 shadow-sm"
-              />
+{/* Right: Creator Info */}
+<div className="relative bg-white rounded-2xl border border-gray-100 shadow-md hover:shadow-lg transition p-6 sm:p-7 max-w-md">
+  {/* Accent strip */}
+  <div className="absolute top-0 left-0 w-full h-1 rounded-t-2xl bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500" />
 
-              <div>
-                <h3 className="text-base sm:text-lg font-semibold text-gray-900 relative inline-block">
-                  Creator & Maintainer
-                  <span className="absolute left-0 -bottom-0 w-full h-0.5 bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500 rounded"></span>
-                </h3>
+  <div className="flex items-center gap-4">
+    <img
+      src="/profile.jpg"
+      alt="Creator"
+      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border border-gray-200 shadow-sm"
+    />
 
-                <p className="text-xs sm:text-sm text-gray-500">
-                  Product Design & Engineering
-                </p>
+    <div>
+      <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
+        Omkar M. Zende
+      </h3>
 
-                <p className="mt-2 text-sm sm:text-base text-gray-700 leading-relaxed max-w-sm">
-                  TalkRehearsel is built with a focus on real usability — clean design, reliable
-                  systems, and practical features that support continuous improvement rather than
-                  one-time learning.
-                </p>
-              </div>
-            </div>
+      <p className="text-sm text-gray-500">
+        Creator & Maintainer
+      </p>
+    </div>
+  </div>
+
+  {/* Divider */}
+  <div className="mt-4 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
+  {/* Description */}
+  <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed">
+    TalkRehearsel is built with a focus on real usability — calm design, reliable
+    systems, and practical speaking practice that helps people build confidence
+    through repetition, not theory.
+  </p>
+
+  {/* Footer meta */}
+  <p className="mt-4 text-xs sm:text-sm text-gray-500">
+    Product Design & Engineering
+  </p>
+</div>
+
           </div>
         </section>
 

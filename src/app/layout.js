@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "TalkRehearsel | Template Platform",
+  title: "TalkRehearsel | Practice Real Conversations",
   description:
-    "TalkRehearsel is Template Platform to extend any project to production grade app.",
+    "TalkRehearsel helps you practice real-world conversations with guided audio and speaking rehearsal — built for confidence, fluency, and clarity.",
 };
 
 

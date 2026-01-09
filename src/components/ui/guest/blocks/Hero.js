@@ -33,15 +33,15 @@ export default function HeroSection() {
       {/* Hero Text */}
       <div className="relative z-10 text-center px-6 py-24 sm:py-32 lg:py-40 max-w-6xl mx-auto">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-tight max-w-4xl mx-auto">
-          <span className="block">Rehearse your talks</span>
+          <span className="block">Practice conversations</span>
           <span className="block bg-gradient-to-r from-teal-400 via-indigo-500 to-purple-500 bg-clip-text text-transparent">
-            like a pro, visually
+            before they really happen
           </span>
         </h1>
 
         <p className="mt-6 text-gray-700 sm:text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-          Practice real-life conversations with structured scenarios, role-based playback,
-          and guided speaking flow. Build confidence before important conversations happen.
+          TalkRehearsel helps you rehearse real-world conversations in a calm, judgment-free space.
+          Listen, respond, and repeat at your own pace — so you feel confident when it matters.
         </p>
 
         {/* CTA */}
@@ -50,16 +50,17 @@ export default function HeroSection() {
             href="/signup"
             className="px-8 py-3 text-base font-bold rounded-full bg-gradient-to-r from-teal-400 to-indigo-500 text-white shadow-lg hover:shadow-2xl hover:scale-105 transition"
           >
-            Get Started
+            Start Practicing
           </a>
           <a
             href="/tkh"
             className="px-8 py-3 text-base font-bold rounded-full border-2 border-gray-300 text-gray-900 hover:bg-gray-100 hover:scale-105 transition"
           >
-            Try Talk Rehearsal
+            Try TalkRehearsel
           </a>
         </div>
       </div>
+
 
       <section className="relative w-full bg-gradient-to-b from-gray-50 via-white to-gray-100 py-24">
           <style jsx>{`

@@ -16,7 +16,7 @@ export default function Footer() {
           <a href="/about" className="text-gray-300 hover:text-blue-400 transition">About</a>
           <a href="/pricing" className="text-gray-300 hover:text-blue-400 transition">Pricing</a>
           <a href="/contact" className="text-gray-300 hover:text-blue-400 transition">Contact Us</a>
-          <a href="/help" className="text-gray-300 hover:text-blue-400 transition">Help</a>
+          <a href="/#" className="text-gray-300 hover:text-blue-400 transition">Help</a>
         </nav>
 
         {/* Right: Social */}

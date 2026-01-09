@@ -29,7 +29,7 @@ export async function GET(req) {
           description: true,
           created_at: true,
         },
-        orderBy: { created_at: "desc" },
+        orderBy: { created_at: "asc" },
         skip,
         take: limit,
       }),
