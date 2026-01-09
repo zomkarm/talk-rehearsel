@@ -57,3 +57,5 @@ next-env.d.ts
 !/public/profile_pics/default.png
 !/public/uploads/talkrehearsel/recordings/placeholder.txt
 #!/public/uploads/talkrehearsel/voices/placeholder.txt
+
+talkrehearsel-audio-manifest.json

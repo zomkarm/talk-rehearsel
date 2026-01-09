@@ -248,3 +248,13 @@ model Recording {
   @@index([line_id])
   @@map("recordings")
 }
+
+model UnscriptedQuestion {
+  id        Int      @id @default(autoincrement())
+  question  String   @db.Text
+  level     String   // casual | social | professional (optional but useful)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("unscripted_question")
+}
