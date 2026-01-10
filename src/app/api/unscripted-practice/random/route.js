@@ -1,8 +1,15 @@
 import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma/client'
+import { getUserFromToken } from '@/lib/auth'
 
 export async function GET(req) {
   try {
+
+    const user = await getUserFromToken()
+    if (!user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    
     const { searchParams } = new URL(req.url)
     const category = searchParams.get('category') || 'casual'
 

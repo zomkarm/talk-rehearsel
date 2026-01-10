@@ -4,18 +4,15 @@ import prisma from "@/lib/prisma/client";
 export async function GET(_, { params }) {
   try {
     const { lineId } = params;
-    const userId = new URL(_.url).searchParams.get("user_id");
 
-    if (!userId) {
-      return NextResponse.json(
-        { error: "Missing user_id" },
-        { status: 400 }
-      );
+    const user = await getUserFromToken()
+    if (!user?.id) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const recording = await prisma.recording.findFirst({
       where: {
-        user_id: userId,
+        user_id: user.id,
         line_id: lineId,
       },
       orderBy: { created_at: "desc" },

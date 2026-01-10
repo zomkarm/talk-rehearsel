@@ -41,7 +41,7 @@ export async function middleware(request) {
     }
   }
 
-  if (path.startsWith('/dashboard') || path.startsWith('/workspace') || path.startsWith('/project')) {
+  if (path.startsWith('/dashboard') || path.startsWith('/recordings') || path.startsWith('/project') || path.startsWith('/unscripted-practice') || path.startsWith('/settings')) {
     if (!userToken) {
       return NextResponse.redirect(new URL('/login', request.url))
     }
@@ -83,6 +83,9 @@ export async function middleware(request) {
 export const config = {
   matcher: [
     '/dashboard/:path*',
+    '/unscripted-practice',
+    '/recordings',
+    '/settings',
     '/project/:path*',
     '/login',
     '/signup',

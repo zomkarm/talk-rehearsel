@@ -14,9 +14,9 @@ export default function Footer() {
         {/* Middle: Nav */}
         <nav className="flex gap-6 mt-6 md:mt-0">
           <a href="/about" className="text-gray-300 hover:text-blue-400 transition">About</a>
-          <a href="/pricing" className="text-gray-300 hover:text-blue-400 transition">Pricing</a>
+          <a href="/#" className="text-gray-300 hover:text-blue-400 transition">Pricing</a>
           <a href="/contact" className="text-gray-300 hover:text-blue-400 transition">Contact Us</a>
-          <a href="/#" className="text-gray-300 hover:text-blue-400 transition">Help</a>
+          <a href="/help" className="text-gray-300 hover:text-blue-400 transition">Help</a>
         </nav>
 
         {/* Right: Social */}

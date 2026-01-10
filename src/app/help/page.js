@@ -11,56 +11,67 @@ const helpSections = [
         slug: 'intro',
         title: 'What is TalkRehearsel?',
         content: `
-TalkRehearsel is a clarity-first learning and builder platform. 
-It helps you learn frontend structure while building real projects. 
-In this guide, you'll understand the basics and how to get started quickly.
+TalkRehearsel is a private, pressure-free space to practice speaking.
+It helps you build confidence by expressing thoughts naturally — without scripts,
+scores, or public judgment.
+
+Whether you're introverted, preparing for interviews, or simply want to speak
+more clearly, TalkRehearsel gives you a calm environment to practice at your own pace.
         `,
       },
       {
-        slug: 'first-project',
-        title: 'Creating Your First Project',
+        slug: 'first-session',
+        title: 'Starting Your First Practice Session',
         content: `
-To create your first project:
-1. Go to the Dashboard
-2. Click "New Project"
-3. Choose a template or start from scratch
-4. Save and start editing in the Designer
+To begin practicing:
+1. Choose a practice module (e.g. Unscripted Practice)
+2. Generate a prompt or question
+3. Speak freely for 30–60 seconds
+4. Review your recording if you wish, or try again
+
+There are no right or wrong answers — the goal is expression, not perfection.
         `,
       },
       {
         slug: 'navigating-dashboard',
         title: 'Navigating the Dashboard',
         content: `
-  The dashboard is your central hub. From here you can:
-  - View all your projects
-  - Access the Learners Space
-  - Manage your account and subscription
-  - Restore drafts or start new work
+Your dashboard is your personal practice space. From here you can:
+- Access different speaking modules
+- Continue practicing without pressure
+- Manage your account and preferences
+- Return anytime and practice again
+
+There are no streaks, rankings, or comparisons — only your own progress.
         `,
       },
       {
-        slug: 'using-templates',
-        title: 'Using Templates',
+        slug: 'practice-mindset',
+        title: 'The Right Practice Mindset',
         content: `
-  TalkRehearsel provides starter templates to help you move faster.
-  - Choose a template when creating a new project
-  - Customize it in the Designer
-  - Export or extend it as needed
-  Templates save time and help you learn by example.
+TalkRehearsel is designed to feel safe and forgiving.
+- Pauses are normal
+- Repeating yourself is okay
+- You don’t need to sound confident to become confident
+
+The goal is comfort and clarity, not performance.
         `,
       },
       {
-        slug: 'saving-progress',
-        title: 'Saving Your Progress',
+        slug: 'privacy-basics',
+        title: 'How Your Practice Is Kept Private',
         content: `
-  Your work is auto-saved as you go. 
-  - Drafts are stored locally if you are not logged in
-  - Logged-in users have their projects synced to the cloud
-  - You can restore unsaved drafts from the header if needed
+Your recordings stay on your device unless explicitly stated otherwise.
+- Nothing is shared publicly
+- Nothing is used for evaluation
+- You control when to record and when to stop
+
+TalkRehearsel respects your privacy by design.
         `,
       },
     ],
   },
+
   {
     id: 'account',
     title: 'Account & Profile',
@@ -69,49 +80,103 @@ To create your first project:
         slug: 'update-profile',
         title: 'Updating Your Profile',
         content: `
-You can update your name, email, and profile picture from the Settings page. 
-Changes are saved instantly and reflected in your dashboard header.
+You can update your basic profile information from the Settings page.
+Your profile is used only for account identification and personalization.
+
+TalkRehearsel does not display public profiles or social feeds.
         `,
       },
       {
         slug: 'profile-picture',
-        title: 'Uploading a Profile Picture',
+        title: 'Using a Profile Picture',
         content: `
-Profile pictures are optional. If you don't upload one, a default avatar is shown. 
-When you upload a new picture, the old one is automatically removed.
+Profile pictures are optional.
+If you choose not to upload one, a default avatar is shown.
+
+Your profile picture is never visible to other users unless explicitly stated
+in a future feature.
         `,
       },
     ],
   },
+
   {
-    id: 'billing',
-    title: 'Billing & Plans',
+    id: 'practice',
+    title: 'Practice Modules',
     articles: [
       {
-        slug: 'free-vs-pro',
-        title: 'Free vs Pro Features',
+        slug: 'unscripted-practice',
+        title: 'What is Unscripted Practice?',
         content: `
-The Free plan includes basic project creation and learning resources. 
-The Pro plan unlocks unlimited projects, export options, and premium templates.
+Unscripted Practice gives you a random speaking prompt.
+You respond naturally, without preparation or scripting.
+
+This helps simulate real-life conversations, interviews, and spontaneous speaking
+situations in a safe environment.
+        `,
+      },
+      {
+        slug: 'audio-vs-video',
+        title: 'Audio vs Video Practice',
+        content: `
+You can choose how you practice:
+- Audio-only if you prefer privacy
+- Video if you want to observe body language and expressions
+
+Both modes are optional — choose what feels comfortable.
         `,
       },
     ],
   },
+
+  {
+    id: 'billing',
+    title: 'Plans & Access',
+    articles: [
+      {
+        slug: 'free-access',
+        title: 'Free Access',
+        content: `
+TalkRehearsel offers core speaking practice features for free.
+This allows anyone to practice speaking without barriers.
+
+Future premium features, if introduced, will focus on deeper support —
+not pressure or competition.
+        `,
+      },
+    ],
+  },
+
   {
     id: 'faq',
     title: 'FAQ & Troubleshooting',
     articles: [
       {
-        slug: 'draft-recovery',
-        title: 'Recovering Unsaved Drafts',
+        slug: 'nothing-saved',
+        title: 'Are My Recordings Saved?',
         content: `
-If you close the browser without saving, TalkRehearsel stores a temporary draft. 
-When you log back in, you'll see a "Restore Draft" option in the header.
+By default, recordings stay only on your current session.
+If you refresh or leave the page, recordings are cleared.
+
+This is intentional to keep practice private and pressure-free.
+        `,
+      },
+      {
+        slug: 'technical-issues',
+        title: 'Microphone or Camera Not Working',
+        content: `
+If recording doesn’t start:
+- Check browser permissions for microphone/camera
+- Reload the page and try again
+- Ensure no other app is using the device
+
+TalkRehearsel works best on modern browsers like Chrome and Edge.
         `,
       },
     ],
   },
 ]
+
 
 export default function HelpPage() {
   const [openSection, setOpenSection] = useState('getting-started')

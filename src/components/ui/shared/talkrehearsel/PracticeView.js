@@ -13,6 +13,9 @@ export default function PracticeView({
 }) {
   const lines = [...situation.lines].sort((a, b) => a.order - b.order);
   const [profile, setProfile] = useState(null)
+  const [profileLoading, setProfileLoading] = useState(true)
+  const [profileError, setProfileError] = useState(false)
+
   const streamRef = useRef(null);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,19 +34,31 @@ export default function PracticeView({
     ? currentLine.actor.id === selectedActor.id
     : false;
 
+  const isProfileReady = !profileLoading && profile?.id
+  const isPracticeLocked = profileLoading || !profile?.id
+
+
   useEffect(() => {
     async function fetchProfile() {
       try {
         const res = await fetch('/api/user', { credentials: 'include' })
-        if (!res.ok) return
+        if (!res.ok) {
+          setProfile(null)
+          setProfileError(true)
+          return
+        }
         const data = await res.json()
         setProfile(data)
       } catch (err) {
         console.error('Error fetching profile:', err)
+        setProfileError(true)
+      } finally {
+        setProfileLoading(false)
       }
     }
     fetchProfile()
   }, [])
+
 
   /* -----------------------------
      Auto-play system lines
@@ -76,10 +91,11 @@ export default function PracticeView({
      Recording
   ----------------------------- */
   async function startRecording() {
-    if(!profile.id){
-      toast.error('Please Signin for Practice')
-      return;
+    if (!isProfileReady) {
+      toast.error('Please sign in to start practice')
+      return
     }
+
     chunksRef.current = [];
     setRecordedUrl(null);
 
@@ -242,10 +258,25 @@ export default function PracticeView({
       <div className="flex flex-wrap gap-3">
         <button
           onClick={startRecording}
-          className="flex items-center gap-2 px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700"
+          disabled={isPracticeLocked}
+          className={`
+            flex items-center gap-2 px-5 py-2.5 rounded-lg
+            ${isPracticeLocked
+              ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+              : 'bg-green-600 text-white hover:bg-green-700'}
+          `}
         >
-          <Mic className="w-4 h-4" />
-          Start Recording
+          {profileLoading ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin" />
+              Checking access…
+            </>
+          ) : (
+            <>
+              <Mic className="w-4 h-4" />
+              Start Recording
+            </>
+          )}
         </button>
 
         <button
