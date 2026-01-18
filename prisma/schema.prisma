@@ -20,6 +20,7 @@ model User {
   subscriptions  Subscription[]
   preferences UserPreference[]
   resetTokens PasswordResetToken[]
+  scheduleRequests ScheduleRequest[]
 
   @@map("user")
 }
@@ -257,4 +258,47 @@ model UnscriptedQuestion {
   createdAt DateTime @default(now())
 
   @@map("unscripted_question")
+}
+
+model PracticeSchedule {
+  id               String   @id @default(uuid())
+  host_user_id     String
+
+  title            String
+  description      String?
+  scheduled_at     DateTime
+  timezone         String
+  duration_minutes Int
+
+  mode             String   // "audio" | "video"
+  room_provider    String   // "external" (future: "native")
+  room_link        String?
+
+  max_participants Int      @default(1)
+  status           String   // "open" | "full" | "completed" | "cancelled"
+
+  created_at       DateTime @default(now())
+
+  requests         ScheduleRequest[]
+
+  @@index([host_user_id])
+  @@index([scheduled_at])
+  @@map("practice_schedules")
+}
+
+model ScheduleRequest {
+  id           String   @id @default(uuid())
+  schedule_id  String
+  user_id      String
+
+  status       String   // "pending" | "approved" | "rejected"
+  created_at   DateTime @default(now())
+
+  schedule PracticeSchedule @relation(fields: [schedule_id], references: [id], onDelete: Cascade)
+  user     User             @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@unique([schedule_id, user_id])
+  @@index([schedule_id])
+  @@index([user_id])
+  @@map("schedule_requests")
 }

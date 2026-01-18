@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Home, Trash2, Users, Laptop, School, Star, Receipt, AudioLines, Video, Scroll } from 'lucide-react'
+import { Home, Trash2, Users, Laptop, School, Star, Receipt, AudioLines, Video, Scroll, Command } from 'lucide-react'
 
 //const starredPages = [{id:1,title:'Sample1'},{id:2,title:'Sample2'}]
 
@@ -77,6 +77,17 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
                              hover:font-semibold transition"
                 >
                   <Video size={18} strokeWidth={2} /> Recordings
+                </a>
+              </li>
+
+               <li>
+                <a
+                  href="/practice-sessions"
+                  className="flex items-center gap-2 px-3 py-2 rounded-md 
+                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
+                             hover:font-semibold transition"
+                >
+                  <Command size={18} strokeWidth={2} /> Practice Sessions
                 </a>
               </li>
 
