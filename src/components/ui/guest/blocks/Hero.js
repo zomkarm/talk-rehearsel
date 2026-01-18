@@ -145,9 +145,132 @@ export default function HeroSection() {
 
             </div>
 
+          </div>
+        </section>
+
+        {/* Practice Sessions Flow */}
+        <section className="relative w-full py-28 overflow-hidden bg-gradient-to-b from-white via-gray-50 to-white">
+
+          {/* Ambient background accents */}
+          <div className="absolute -top-32 -left-32 w-[420px] h-[420px] bg-emerald-300/20 rounded-full blur-3xl" />
+          <div className="absolute top-1/3 -right-32 w-[480px] h-[480px] bg-indigo-300/20 rounded-full blur-3xl" />
+
+          <div className="relative max-w-6xl mx-auto px-6">
+
+            {/* Header */}
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-500 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
+                Guided practice sessions
+              </h2>
+
+              <p className="mt-6 text-lg md:text-xl text-gray-600 leading-relaxed">
+                When solo practice feels comfortable, you can step into guided sessions —
+                structured, private conversations designed to help you practice
+                real dialogue at your own pace.
+              </p>
+
+              <div className="mt-8 w-28 h-1 mx-auto bg-gradient-to-r from-emerald-500 via-cyan-500 to-indigo-500 rounded-full" />
+            </div>
+
+            {/* Steps */}
+            <div className="relative mt-24 grid grid-cols-1 md:grid-cols-4 gap-10">
+
+              {/* Connector line (desktop only) */}
+              <div className="hidden md:block absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-emerald-200 via-cyan-200 to-indigo-200" />
+
+              {[
+                {
+                  step: 'Step 1',
+                  color: 'emerald',
+                  title: 'Choose a session',
+                  text: 'Browse available practice sessions and pick one that fits your topic, time, and comfort level.',
+                },
+                {
+                  step: 'Step 2',
+                  color: 'cyan',
+                  title: 'Join privately',
+                  text: 'Sessions are participant-limited and private. No public profiles, no discovery, no exposure.',
+                },
+                {
+                  step: 'Step 3',
+                  color: 'blue',
+                  title: 'Practice naturally',
+                  text: 'Speak, listen, pause, and respond — just like a real conversation, without performance pressure.',
+                },
+                {
+                  step: 'Step 4',
+                  color: 'indigo',
+                  title: 'Leave with clarity',
+                  text: 'Sessions end cleanly. No forced feedback, no recordings shared. You keep only what helped you.',
+                },
+              ].map((s, i) => (
+                <div
+                  key={i}
+                  className="relative z-10 group rounded-2xl p-6 bg-white border shadow-sm hover:shadow-xl transition"
+                >
+                  {/* Step badge */}
+                  <span
+                    className={`absolute -top-4 left-6 px-3 py-1 text-xs font-bold rounded-full text-white bg-${s.color}-600`}
+                  >
+                    {s.step}
+                  </span>
+
+                  {/* Glow */}
+                  <div
+                    className={`absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition bg-${s.color}-500/5`}
+                  />
+
+                  <h3 className="mt-4 text-xl font-semibold text-gray-800">
+                    {s.title}
+                  </h3>
+
+                  <p className="mt-3 text-gray-600 leading-relaxed">
+                    {s.text}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Human reassurance */}
+            <div className="relative mt-20 max-w-3xl mx-auto rounded-3xl border bg-white p-8 text-center shadow-md hover:shadow-lg">
+              <div className="absolute inset-x-8 -top-px h-px bg-gradient-to-r from-transparent via-indigo-300 to-transparent" />
+
+              <h4 className="text-lg font-semibold text-gray-800">
+                You’ll be practicing with a real person
+              </h4>
+
+              <p className="mt-4 text-gray-600 leading-relaxed">
+                Practice sessions connect you with another TalkRehearsel user —
+                someone who is also here to practice speaking, not to judge or evaluate.
+              </p>
+
+              <p className="mt-3 text-gray-600 leading-relaxed">
+                Both participants join voluntarily, with the same intent:
+                calm, respectful conversation practice in a private setting.
+              </p>
+
+              <p className="mt-5 text-sm text-gray-500 italic">
+                No public profiles • No followers • No social feeds
+              </p>
+            </div>
+
+            {/* CTA */}
+            <div className="mt-20 text-center">
+              <a
+                href="/dashboard/practice-sessions"
+                className="inline-flex items-center gap-2 px-10 py-4 rounded-full bg-gradient-to-r from-emerald-500 to-indigo-500 text-white font-semibold shadow-xl hover:scale-105 transition"
+              >
+                Explore practice sessions
+              </a>
+
+              <p className="mt-4 text-sm text-gray-500">
+                Optional • Private • No obligation
+              </p>
+            </div>
 
           </div>
         </section>
+
 
 
     </main>

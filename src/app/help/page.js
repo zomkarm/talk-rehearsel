@@ -175,6 +175,119 @@ TalkRehearsel works best on modern browsers like Chrome and Edge.
       },
     ],
   },
+  {
+    id: 'practice-sessions',
+    title: 'Practice Sessions (Live)',
+    articles: [
+      {
+        slug: 'what-are-practice-sessions',
+        title: 'What Are Practice Sessions?',
+        content: `
+  Practice Sessions are scheduled, real-time speaking rooms where users
+  can practice live conversations with others.
+
+  Unlike solo practice modules, Practice Sessions are:
+  - Time-bound
+  - Hosted by a user
+  - Joined by request
+  - Focused on live interaction, not performance
+
+  They are designed to feel calm, intentional, and respectful — not crowded or competitive.
+        `,
+      },
+
+      {
+        slug: 'hosting-a-session',
+        title: 'Hosting a Practice Session',
+        content: `
+  When you host a Practice Session, you are in control of the room.
+
+  As a host, you can:
+  - Choose the topic and description
+  - Set date, time, duration, and timezone
+  - Decide audio or video mode
+  - Limit the number of participants
+  - Share an external meeting link (Zoom / Meet)
+
+  You can edit or delete your session anytime before it starts.
+  Once the session time has passed, editing is disabled.
+        `,
+      },
+
+      {
+        slug: 'requesting-to-join',
+        title: 'Requesting to Join a Session',
+        content: `
+  To join a Practice Session:
+  1. Browse sessions on the Practice Sessions billboard
+  2. Click "Request to Join" on a session
+  3. Wait for the host to approve or reject your request
+
+  This approval step exists to keep sessions focused, small, and respectful.
+
+  You will not be added automatically — joining is always intentional.
+        `,
+      },
+
+      {
+        slug: 'joining-the-room',
+        title: 'Joining the Practice Room',
+        content: `
+  If your request is approved, the session will appear in the "Join Room" page.
+
+  From there, you can:
+  - See upcoming sessions you are approved for
+  - Open the meeting link at the scheduled time
+  - Join the session when it starts
+
+  Only approved participants can see and access the room link.
+        `,
+      },
+
+      {
+        slug: 'timezones-and-scheduling',
+        title: 'Timezones & Scheduling',
+        content: `
+  Each Practice Session is scheduled in a specific timezone.
+
+  - The host selects the timezone for the session
+  - The billboard shows the timezone clearly
+  - You should confirm the time matches your local availability
+
+  This avoids confusion when sessions are hosted globally.
+        `,
+      },
+
+      {
+        slug: 'privacy-and-safety',
+        title: 'Privacy & Safety in Practice Sessions',
+        content: `
+  Practice Sessions are not public broadcasts.
+
+  Important privacy notes:
+  - Session links are visible only to hosts and approved participants
+  - There are no public replays or recordings
+  - Admins do not monitor sessions or access links
+  - Sessions can be cancelled by the host or admin if needed
+
+  The goal is a respectful, low-pressure environment.
+        `,
+      },
+
+      {
+        slug: 'when-sessions-end',
+        title: 'What Happens When a Session Ends?',
+        content: `
+  Once a session’s scheduled time has passed:
+  - The session is marked as completed
+  - Editing and joining are disabled
+  - The room link is no longer shown publicly
+
+  This keeps the system clean and avoids confusion with old sessions.
+        `,
+      },
+    ],
+  }
 ]
 
 

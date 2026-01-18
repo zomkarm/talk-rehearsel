@@ -30,47 +30,51 @@ export default function AboutPage() {
                 By combining structured scenarios, voice playback, and user-recorded responses,
                 TalkRehearsel bridges the gap between theory and real communication — helping users
                 improve clarity, fluency, and confidence through repetition and feedback.
+                In addition to solo practice, TalkRehearsel also offers guided Practice Sessions —
+                scheduled, one-on-one or small-group conversations that help you rehearse real
+                dialogue in a focused and private setting.
+
               </p>
             </div>
 
-{/* Right: Creator Info */}
-<div className="relative bg-white rounded-2xl border border-gray-100 shadow-md hover:shadow-lg transition p-6 sm:p-7 max-w-md">
-  {/* Accent strip */}
-  <div className="absolute top-0 left-0 w-full h-1 rounded-t-2xl bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500" />
+            {/* Right: Creator Info */}
+            <div className="relative bg-white rounded-2xl border border-gray-100 shadow-md hover:shadow-lg transition p-6 sm:p-7 max-w-md">
+              {/* Accent strip */}
+              <div className="absolute top-0 left-0 w-full h-1 rounded-t-2xl bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500" />
 
-  <div className="flex items-center gap-4">
-    <img
-      src="/profile.jpg"
-      alt="Creator"
-      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border border-gray-200 shadow-sm"
-    />
+              <div className="flex items-center gap-4">
+                <img
+                  src="/profile.jpg"
+                  alt="Creator"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border border-gray-200 shadow-sm"
+                />
 
-    <div>
-      <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
-        Omkar M. Zende
-      </h3>
+                <div>
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
+                    Omkar M. Zende
+                  </h3>
 
-      <p className="text-sm text-gray-500">
-        Creator & Maintainer
-      </p>
-    </div>
-  </div>
+                  <p className="text-sm text-gray-500">
+                    Creator & Maintainer
+                  </p>
+                </div>
+              </div>
 
-  {/* Divider */}
-  <div className="mt-4 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+              {/* Divider */}
+              <div className="mt-4 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
-  {/* Description */}
-  <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed">
-    TalkRehearsel is built with a focus on real usability — calm design, reliable
-    systems, and practical speaking practice that helps people build confidence
-    through repetition, not theory.
-  </p>
+              {/* Description */}
+              <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed">
+                TalkRehearsel is built with a focus on real usability — calm design, reliable
+                systems, and practical speaking practice that helps people build confidence
+                through repetition, not theory.
+              </p>
 
-  {/* Footer meta */}
-  <p className="mt-4 text-xs sm:text-sm text-gray-500">
-    Product Design & Engineering
-  </p>
-</div>
+              {/* Footer meta */}
+              <p className="mt-4 text-xs sm:text-sm text-gray-500">
+                Product Design & Engineering
+              </p>
+            </div>
 
           </div>
         </section>
@@ -106,40 +110,44 @@ export default function AboutPage() {
           <p className="mt-4 text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
             The platform emphasizes clarity over complexity, real practice over passive learning,
             and long-term confidence over short-term performance.
+            Practice Sessions are designed with the same philosophy in mind — calm, respectful,
+            and purpose-driven. Sessions are private by default, participant-controlled, and
+            focused on meaningful conversation rather than performance or judgment.
+
           </p>
         </section>
 
         {/* Support Section */}
-      <section className="mt-4 sm:mt-20 rounded-3xl bg-white px-4 sm:px-6 md:px-8 py-12 sm:py-14 md:py-16 text-center border border-gray-100 shadow-sm">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
-          Free & Community-Supported
-        </h2>
+        <section className="mt-4 sm:mt-20 rounded-3xl bg-white px-4 sm:px-6 md:px-8 py-12 sm:py-14 md:py-16 text-center border border-gray-100 shadow-sm">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
+            Free & Community-Supported
+          </h2>
 
-        <p className="mt-4 text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
-          TalkRehearsel is free to use and built as an independent project focused on real-world
-          speaking practice. There are no ads, no subscriptions, and no locked features.
-        </p>
+          <p className="mt-4 text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
+            TalkRehearsel is free to use and built as an independent project focused on real-world
+            speaking practice. There are no ads, no subscriptions, and no hidden restrictions.
+          </p>
 
-        <p className="mt-4 text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
-          If this platform helps you practice speaking with more confidence, you can choose to
-          support its development and ongoing maintenance.
-        </p>
+          <p className="mt-4 text-gray-700 max-w-3xl mx-auto leading-relaxed text-base sm:text-lg md:text-xl">
+            If this platform helps you practice speaking with more confidence, you can choose to
+            support its development and ongoing maintenance.
+          </p>
 
-        <div className="mt-8">
-          <a
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-yellow-400 text-gray-900 font-medium hover:bg-yellow-300 transition"
-          >
-            ☕ Support TalkRehearsel
-          </a>
-        </div>
+          <div className="mt-8">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-yellow-400 text-gray-900 font-medium hover:bg-yellow-300 transition"
+            >
+              ☕ Support TalkRehearsel
+            </a>
+          </div>
 
-        <p className="mt-4 text-sm text-gray-500">
-          Support is completely optional.
-        </p>
-      </section>
+          <p className="mt-4 text-sm text-gray-500">
+            Support is completely optional.
+          </p>
+        </section>
 
       </div>
 

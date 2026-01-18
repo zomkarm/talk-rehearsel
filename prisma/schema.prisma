@@ -277,6 +277,9 @@ model PracticeSchedule {
   max_participants Int      @default(1)
   status           String   // "open" | "full" | "completed" | "cancelled"
 
+  admin_cancel_reason String?
+  admin_cancelled_at  DateTime?
+
   created_at       DateTime @default(now())
 
   requests         ScheduleRequest[]
