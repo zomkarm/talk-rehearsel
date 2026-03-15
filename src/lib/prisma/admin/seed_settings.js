@@ -107,6 +107,7 @@ export async function SettingSeeder() {
         { key: 'WEBHOOK_RETRY_LIMIT', value: '3', description: 'Webhook retry limit' },
         { key: 'GOOGLE_CLIENT_ID', value: '*', description: 'Google auth client id for signup/signin' },
         { key: 'GOOGLE_SECRET_KEY', value: '*', description: 'Google auth secret key for signup/sigin' },
+        { key: 'GEMINI_API_KEY', value: '*', description: 'Google GenerativeAI(gemini-2.5-flash) key for generating interviews' },
 
 
         // Localization
