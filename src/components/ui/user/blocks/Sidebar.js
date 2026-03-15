@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Home, Trash2, Users, Laptop, School, Star, Receipt, AudioLines, Video, Scroll, Command } from 'lucide-react'
+import { Home, Trash2, Users, Laptop, School, Star, Receipt, AudioLines, Video, Scroll, Command, MessageSquareText } from 'lucide-react'
 
 //const starredPages = [{id:1,title:'Sample1'},{id:2,title:'Sample2'}]
 
@@ -55,6 +55,17 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
                              hover:font-semibold transition"
                 >
                   <AudioLines size={18} strokeWidth={2} /> Talk Rehearsel
+                </a>
+              </li>
+
+               <li>
+                <a
+                  href="/interview-studio"
+                  className="flex items-center gap-2 px-3 py-2 rounded-md 
+                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
+                             hover:font-semibold transition"
+                >
+                  <MessageSquareText size={18} strokeWidth={2} /> Interview Studio
                 </a>
               </li>
 

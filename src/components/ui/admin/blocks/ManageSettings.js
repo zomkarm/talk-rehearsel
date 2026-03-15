@@ -158,6 +158,8 @@ export default function ManageSettings() {
       { key: 'WEBHOOK_RETRY_LIMIT', label: 'Webhook Retry Limit', type: 'number' },
       { key: 'GOOGLE_CLIENT_ID', label: 'Google Client Id', type: 'text' },
       { key: 'GOOGLE_SECRET_KEY', label: 'Google Secret Key', type: 'text' },
+      { key: 'GEMINI_API_KEY', label: 'Google GenerativeAI(gemini-2.5-flash) key', type: 'text'  },
+
 
     ],
 

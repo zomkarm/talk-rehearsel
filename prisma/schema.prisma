@@ -305,3 +305,46 @@ model ScheduleRequest {
   @@index([user_id])
   @@map("schedule_requests")
 }
+
+
+enum InterviewDifficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+model Interview {
+  id             String   @id @default(uuid())
+  user_id        String
+
+  title          String
+  target_role    String
+  difficulty     InterviewDifficulty
+  question_count Int
+
+  created_at     DateTime @default(now())
+
+  user       User                @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  questions  InterviewQuestion[]
+
+  @@index([user_id])
+  @@map("interview")
+}
+
+
+model InterviewQuestion {
+  id              String   @id @default(uuid())
+  interview_id    String
+
+  order_index     Int
+  question_text   String   @db.Text
+  answer_text     String?  @db.Text
+
+  created_at      DateTime @default(now())
+
+  interview Interview @relation(fields: [interview_id], references: [id], onDelete: Cascade)
+
+  @@index([interview_id])
+  @@unique([interview_id, order_index])
+  @@map("interview_question")
+}
