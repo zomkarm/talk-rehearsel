@@ -41,7 +41,7 @@ export async function middleware(request) {
     }
   }
 
-  if (path.startsWith('/dashboard') || path.startsWith('/recordings') || path.startsWith('/project') || path.startsWith('/unscripted-practice') || path.startsWith('/settings') || path.startsWith('/practice-sessions')) {
+  if (path.startsWith('/dashboard') || path.startsWith('/interview-studio') || path.startsWith('/recordings') || path.startsWith('/project') || path.startsWith('/unscripted-practice') || path.startsWith('/settings') || path.startsWith('/practice-sessions')) {
     if (!userToken) {
       return NextResponse.redirect(new URL('/login', request.url))
     }
@@ -83,6 +83,7 @@ export async function middleware(request) {
 export const config = {
   matcher: [
     '/dashboard/:path*',
+    '/interview-studio',
     '/unscripted-practice',
     '/recordings',
     '/practice-sessions/:path*',

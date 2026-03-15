@@ -121,20 +121,29 @@ Rules:
           }
         ]
       })
-
+      
       const response = result.response
       let text = response.text()
-
+      
       const clean = text.replace(/```json|```/g,'').trim()
-
+      
       const data = JSON.parse(clean)
 
-      if(!data.questions || !Array.isArray(data.questions)){
-        throw new Error("Invalid LLM response")
+      if (data.validResume === false) {
+        return {
+          validResume: false,
+          reason: data.reason || "Invalid resume"
+        }
       }
 
-      return data.questions.slice(0, questionCount)
+      if (!data.questions || !Array.isArray(data.questions)) {
+        throw new Error("Invalid LLM response format")
+      }
 
+      return {
+        validResume: true,
+        questions: data.questions.slice(0, questionCount)
+      }
     }catch(err){
       console.error("INTERVIEW_GENERATOR_ERROR:",err.message)
       throw err

@@ -114,13 +114,13 @@ export default function RecordingsPage() {
   /* --------------------------------
      UI
   --------------------------------- */
-  if (loading) {
+/*  if (loading) {
     return (
       <main className="flex-1 p-6 flex items-center justify-center">
         <Loader2 className="animate-spin text-gray-500" />
       </main>
     )
-  }
+  }*/
 
   return (
     <main className="flex-1 bg-white p-6 mt-2 border-2 rounded-tl-xl overflow-y-auto space-y-8">

@@ -21,6 +21,7 @@ model User {
   preferences UserPreference[]
   resetTokens PasswordResetToken[]
   scheduleRequests ScheduleRequest[]
+  interviews Interview[]
 
   @@map("user")
 }

@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { Headphones, Play, Loader2, Trash2, Plus, FileUp, Clock, Eye, EyeOff } from 'lucide-react'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { useInterviewSessionStore } from '@/store/interviewSessionStore'
 
 export default function InterviewStudio() {
 
@@ -12,6 +15,11 @@ export default function InterviewStudio() {
   const [showModeModal,setShowModeModal] = useState(false)
 
   const [selectedInterview,setSelectedInterview] = useState(null)
+  const router = useRouter()
+
+  const setSessionInterviewId = useInterviewSessionStore(s => s.setSessionInterviewId)
+  const setSessionMode = useInterviewSessionStore(s => s.setSessionMode)
+  const setSessionTimer = useInterviewSessionStore(s => s.setSessionTimer)
 
   const [form,setForm] = useState({
     file:null,
@@ -89,10 +97,10 @@ export default function InterviewStudio() {
         difficulty:'INTERMEDIATE',
         questionCount:10
       })
-
+      toast.success("Interview Generated successfully")
     }catch(err){
       console.error(err)
-      alert("Failed to generate interview")
+      toast.error("Failed to generate interview")
     }
     finally{
       setLoading(false)
@@ -125,7 +133,12 @@ export default function InterviewStudio() {
   }
 
   function startInterview(){
-    console.log("Start interview",selectedInterview,mode,timer)
+
+    setSessionInterviewId(selectedInterview.id)
+    setSessionMode(mode)
+    setSessionTimer(timer)
+
+    router.push(`/interview-studio/${selectedInterview.id}`)
   }
 
   useEffect(()=>{
