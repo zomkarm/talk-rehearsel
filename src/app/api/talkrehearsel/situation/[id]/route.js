@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma/client";
 
 export async function GET(_, { params }) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     const situation = await prisma.situation.findUnique({
       where: { id },

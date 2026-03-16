@@ -26,6 +26,12 @@ export const useInterviewSessionStore = create((set) => ({
   startSession: () =>
     set({ sessionStarted: true }),
 
+  setSessionCompleted: (value) =>
+    set({ sessionCompleted: value }),
+
+  setSesionCurrentIndex: (value) =>
+    set({ sessionCurrentIndex: value }),
+
   nextSessionQuestion: () =>
     set((state) => {
 
