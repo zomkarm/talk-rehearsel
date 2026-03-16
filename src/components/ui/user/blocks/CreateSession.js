@@ -55,7 +55,7 @@ export default function CreateSession() {
   }
 
   return (
-    <main className="flex-1 bg-white p-6 mt-2 border-2 rounded-tl-xl overflow-y-auto">
+    <main className="flex-1 bg-white p-6 rounded-tl-xl overflow-y-auto">
       <div className="max-w-3xl mx-auto space-y-6">
 
         <header>

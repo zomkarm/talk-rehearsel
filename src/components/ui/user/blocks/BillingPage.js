@@ -32,7 +32,7 @@ export default function BillingPage() {
   const allPayments = subscriptions.flatMap(sub => sub.payments.map(p => ({ ...p, planTitle: sub.planTitle })))
 
   return (
-    <main className="flex-1 bg-white p-6 mt-2 border-2 rounded-tl-xl overflow-y-auto">
+    <main className="flex-1 bg-white p-6 rounded-tl-xl overflow-y-auto">
       <h1 className="text-2xl font-bold mb-6 bg-gradient-to-r from-teal-600 to-indigo-600 bg-clip-text text-transparent">
         Billing
       </h1>

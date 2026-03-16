@@ -76,80 +76,69 @@ export default function Header(props) {
   }
 
 
-	return (
-    <header className="flex items-center justify-between px-6 py-4 bg-white border-b rounded-bl-3xl shadow-sm">
-      {/* Sidebar toggle */}
-      <button
-        onClick={props.toggleSidebar}
-        className="md:hidden p-2 text-gray-600 hover:text-indigo-600 focus:outline-none"
-      >
-        <Menu size={16} />
-      </button>
+return (
+    <header className="flex items-center justify-between px-8 py-2 bg-white border-b border-indigo-50 sticky top-0 z-30 transition-all duration-300">
+      
+      <div className="flex items-center gap-4">
+        {/* Sidebar toggle - Mobile only */}
+        <button
+          onClick={props.toggleSidebar}
+          className="md:hidden p-2.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors focus:outline-none"
+        >
+          <Menu size={20} />
+        </button>
 
-      {/* Workspace title */}
-      <div className="text-base font-bold bg-gradient-to-r from-teal-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">
-        My Workspace
+        {/* Workspace title - More elegant Typography */}
+        <div className="flex flex-col">
+          <h1 className="text-sm font-bold bg-gradient-to-r from-teal-600 to-indigo-600 bg-clip-text text-transparent tracking-tight">
+            My Workspace
+          </h1>
+          <p className="hidden sm:block text-[10px] text-slate-400 font-medium uppercase tracking-widest">
+            TalkRehearsel Studio
+          </p>
+        </div>
       </div>
 
       {/* Right actions */}
-      <div className="flex items-center gap-4">
-        {/* Plan badge */}
-        {/*
-        <span
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full shadow-sm
-            ${plan === 'Pro'
-              ? 'bg-teal-600 text-white'
-              : 'bg-gray-200 text-gray-700'
-            }`}
-        >
-          {plan === 'Pro' ? (
-            <>
-              <Crown size={14} className="shrink-0" />
-              <a href="/pricing">Premium</a>
-            </>
-          ) : (
-            <>
-              <User size={14} className="shrink-0" />
-              <a href="/pricing">Basic</a>
-            </>
-          )}
-        </span>*/}
+      <div className="flex items-center gap-5">
+        
+        {/* Optional: Add a subtle notification or search icon here for balance */}
 
-        {/* Profile */}
+        {/* Profile Section */}
         <div className="relative" ref={dropdownRef}>
-         <img
-            onClick={() => setProfileModal(prev => !prev)}
-            src={profile?.profile_pic ? `/profile_pics/${profile.profile_pic}` : '/profile.jpg'}
-            alt="Profile"
-            className="w-8 h-8 rounded-full cursor-pointer border border-gray-300 hover:ring-2 hover:ring-indigo-500 transition object-cover"
-          />
+          <div className="p-0.5 rounded-full border-2 border-transparent hover:border-indigo-100 transition-all cursor-pointer">
+            <img
+              onClick={() => setProfileModal(prev => !prev)}
+              src={profile?.profile_pic ? `/profile_pics/${profile.profile_pic}` : '/profile.jpg'}
+              alt="Profile"
+              className="w-9 h-9 rounded-full transition object-cover shadow-sm"
+            />
+          </div>
 
           {profileModal && (
-            <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 
-                            rounded-xl shadow-lg z-20 overflow-hidden animate-fade-in">
-              <div className="px-4 py-3 border-b border-gray-100">
-                <p className="text-sm font-semibold text-gray-800">{profile?.name || 'User'}</p>
-                <p className="text-xs text-gray-500">{profile?.email || ''}</p>
+            <div className="absolute right-0 mt-3 w-56 bg-white border border-indigo-50 
+                            rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] z-50 overflow-hidden animate-in fade-in zoom-in duration-200">
+              <div className="px-5 py-4 bg-gradient-to-br from-white to-indigo-50/30 border-b border-indigo-50">
+                <p className="text-sm font-bold text-slate-800">{profile?.name || 'User'}</p>
+                <p className="text-xs text-slate-500 truncate">{profile?.email || 'user@example.com'}</p>
               </div>
-              <ul className="text-sm text-gray-700">
+              
+              <ul className="p-2 text-sm text-slate-600">
                 <li
-                  className="px-4 py-2 hover:bg-gray-50 cursor-pointer"
-                  onClick={() => {
-                    router.push('/user/settings')
-                  }}
+                  className="flex items-center px-3 py-2.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg cursor-pointer transition-colors"
+                  onClick={() => router.push('/user/settings')}
                 >
                   My Account
                 </li>
                 <li
-                  className="px-4 py-2 hover:bg-gray-50 cursor-pointer"
-                  onClick={() => {
-                    router.push('/help')
-                  }}
+                  className="flex items-center px-3 py-2.5 hover:bg-indigo-50 hover:text-indigo-600 rounded-lg cursor-pointer transition-colors"
+                  onClick={() => router.push('/help')}
                 >
-                  Help
+                  Help Center
                 </li>
+                <div className="my-1 border-t border-slate-50" />
                 <li
-                  className="px-4 py-2 hover:bg-gray-50 cursor-pointer"
+                  className="flex items-center px-3 py-2.5 text-rose-500 hover:bg-rose-50 rounded-lg cursor-pointer transition-colors font-medium"
                   onClick={logout}
                 >
                   Logout
@@ -159,7 +148,6 @@ export default function Header(props) {
           )}
         </div>
       </div>
-
     </header>
-	);
-}
+  );
+  }

@@ -222,7 +222,7 @@ export default function PracticeSessions() {
   )
 
   return (
-    <main className="flex-1 bg-white p-6 mt-2 border-2 rounded-tl-xl overflow-y-auto">
+    <main className="flex-1 bg-white p-6 rounded-tl-xl overflow-y-auto">
       <div className="max-w-6xl mx-auto space-y-6">
 
         {/* Header */}

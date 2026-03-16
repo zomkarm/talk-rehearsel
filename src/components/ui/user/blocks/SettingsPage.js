@@ -61,7 +61,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <main className="flex-1 bg-white p-8 mt-2 border-2 rounded-tl-3xl overflow-y-auto">
+    <main className="flex-1 bg-white p-8 rounded-tl-3xl overflow-y-auto">
       <h1 className="text-2xl font-bold mb-6 bg-gradient-to-r from-teal-600 to-indigo-600 bg-clip-text text-transparent">
         Settings
       </h1>

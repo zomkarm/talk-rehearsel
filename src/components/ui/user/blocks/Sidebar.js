@@ -1,134 +1,120 @@
-import { useState, useEffect } from 'react'
-import { Home, Trash2, Users, Laptop, School, Star, Receipt, AudioLines, Video, Scroll, Command, MessageSquareText } from 'lucide-react'
+import { useState } from 'react'
+import { Home, Trash2, AudioLines, Video, Scroll, Command, MessageSquareText, ChevronLeft, ChevronRight, X, Settings, PanelLeft,PanelRight } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
-//const starredPages = [{id:1,title:'Sample1'},{id:2,title:'Sample2'}]
+export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const pathname = usePathname();
 
-export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
-  const [loading, setLoading] = useState(true)
+  const navItems = [
+    { name: 'Home', icon: Home, href: '/user/dashboard' },
+    { name: 'Talk Rehearsal', icon: AudioLines, href: '/tkh' },
+    { name: 'Interview Studio', icon: MessageSquareText, href: '/user/interview-studio' },
+    { name: 'Unscripted Practice', icon: Scroll, href: '/user/unscripted-practice' },
+    { name: 'Recordings', icon: Video, href: '/user/recordings' },
+    { name: 'Practice Sessions', icon: Command, href: '/user/practice-sessions' },
+    { name: 'Settings', icon: Settings, href: '/user/settings' },
+  ];
 
   return (
-    <aside
-      className={`fixed top-0 left-0 h-full w-64 
-                  bg-gradient-to-br from-indigo-100 to-purple-200
-                  p-5 shadow-sm z-50 
-                  transform transition-transform duration-300 
-                  ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-                  md:translate-x-0 md:static md:flex`}
-                >
-      <div className="flex flex-col h-full w-full">
-        {/* Top 50% */}
-        <div className="flex flex-col flex-1 overflow-y-auto">
-          {/* Logo + Close Button */}
-          <div className="flex items-center justify-between mb-8">
-            <div className="text-2xl font-extrabold tracking-wide 
-                            bg-gradient-to-r from-teal-500 to-indigo-600 
-                            bg-clip-text text-transparent drop-shadow-sm">
-              TalkRehearsel
+    <>
+      {/* Mobile Backdrop - Closes sidebar when clicking outside */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      <aside
+        className={`fixed top-0 left-0 h-full z-50 transition-all duration-300 ease-in-out border-r border-indigo-100
+          bg-indigo-50 shadow-xl md:static
+          ${isCollapsed ? 'md:w-20' : 'md:w-64'} 
+          ${sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full md:translate-x-0'}`}
+      >
+        <div className="flex flex-col h-full relative p-4">
+          
+          {/* Desktop Toggle Button */}
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="hidden md:flex absolute -right-3 top-10 w-6 h-6 bg-white border border-indigo-200 
+                       rounded-full items-center justify-center text-indigo-600 hover:bg-indigo-600 
+                       hover:text-white transition-colors shadow-sm z-10"
+          >
+            {isCollapsed ? <PanelRight size={14} /> : <PanelLeft size={14} />}
+          </button>
+
+          {/* Mobile Close Button */}
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="md:hidden absolute right-4 top-5 text-slate-400 hover:text-indigo-600"
+          >
+            <X size={20} />
+          </button>
+
+          {/* Logo Section */}
+          <div className={`flex items-center gap-3 mb-10 overflow-hidden ${isCollapsed ? 'md:justify-center' : 'px-2'}`}>
+            <div className="flex-shrink-0 w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-indigo-200 shadow-lg">
+              <AudioLines className="text-white" size={22} />
             </div>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="md:hidden text-gray-500 hover:text-indigo-600 focus:outline-none"
-            >
-              ✕
-            </button>
+            {(!isCollapsed || sidebarOpen) && (
+              <span className="text-xl font-bold bg-gradient-to-r from-indigo-700 to-teal-500 bg-clip-text text-transparent truncate">
+                TalkRehearsel
+              </span>
+            )}
           </div>
 
           {/* Navigation */}
-          <nav className="text-sm font-medium">
-            <ul className="space-y-1.5">
-              <li>
-                <a
-                  href="/user/dashboard"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md 
-                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
-                             hover:font-semibold transition"
-                >
-                  <Home size={18} strokeWidth={2} /> Home
-                </a>
-              </li>
+          <nav className="flex-1 overflow-y-auto no-scrollbar">
+            <ul className="space-y-1">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href; // Check if active
 
-               <li>
-                <a
-                  href="/tkh"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md 
-                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
-                             hover:font-semibold transition"
-                >
-                  <AudioLines size={18} strokeWidth={2} /> Talk Rehearsel
-                </a>
-              </li>
+                return (
+                  <li key={item.name} className="relative">
+                    <a
+                      href={item.href}
+                      className={`group flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200
+                        ${isActive 
+                          ? 'bg-indigo-100/80 text-indigo-700 shadow-sm' // Active Style
+                          : 'text-slate-600 hover:bg-white/50 hover:text-indigo-600' // Inactive/Hover Style
+                        }
+                        ${isCollapsed ? 'md:justify-center px-3 md:px-0' : ''}`}
+                      title={isCollapsed ? item.name : ''}
+                    >
+                      
+                      <item.icon 
+                        size={18} 
+                        className={`transition-transform ${isActive ? 'scale-110' : 'group-hover:scale-110'}`} 
+                      />
+                      
+                      {(!isCollapsed || sidebarOpen) && (
+                        <span className={`font-medium text-sm whitespace-nowrap ${isActive ? 'font-bold' : ''}`}>
+                          {item.name}
+                        </span>
+                      )}
 
-               <li>
-                <a
-                  href="/user/interview-studio"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md 
-                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
-                             hover:font-semibold transition"
-                >
-                  <MessageSquareText size={18} strokeWidth={2} /> Interview Studio
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="/user/unscripted-practice"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md 
-                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
-                             hover:font-semibold transition"
-                >
-                  <Scroll size={18} strokeWidth={2} /> Unscripted Practice
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="/user/recordings"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md 
-                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
-                             hover:font-semibold transition"
-                >
-                  <Video size={18} strokeWidth={2} /> Recordings
-                </a>
-              </li>
-
-               <li>
-                <a
-                  href="/user/practice-sessions"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md 
-                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
-                             hover:font-semibold transition"
-                >
-                  <Command size={18} strokeWidth={2} /> Practice Sessions
-                </a>
-              </li>
-
-              {/*<li>
-                <a
-                  href="/billing"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md 
-                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
-                             hover:font-semibold transition"
-                >
-                  <Receipt size={18} strokeWidth={2} /> Billing
-                </a>
-              </li>*/}
-
-              <li>
-                <a
-                  href="/user/settings"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md 
-                             text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
-                             hover:font-semibold transition"
-                >
-                  <Trash2 size={18} strokeWidth={2} /> Settings
-                </a>
-              </li>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
+
+          {/* User Profile Footer */}
+          <div className={`mt-auto pt-4 border-t border-slate-100 ${isCollapsed ? 'md:text-center' : 'px-2'}`}>
+            <div className={`flex items-center gap-3 ${isCollapsed ? 'md:justify-center' : ''}`}>
+              <div className="w-8 h-8 rounded-full bg-teal-500 border-2 border-white shadow-sm flex-shrink-0" />
+              {(!isCollapsed || sidebarOpen) && (
+                <div className="overflow-hidden">
+                  <p className="text-xs font-semibold text-slate-800 truncate"></p>
+                  <p className="text-[10px] text-teal-600 font-bold uppercase tracking-wider"></p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-
-
-      </div>
-    </aside>
-  )
+      </aside>
+    </>
+  );
 }

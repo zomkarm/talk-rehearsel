@@ -123,7 +123,7 @@ export default function RecordingsPage() {
   }*/
 
   return (
-    <main className="flex-1 bg-white p-6 mt-2 border-2 rounded-tl-xl overflow-y-auto space-y-8">
+    <main className="flex-1 bg-white p-6 rounded-tl-xl overflow-y-auto space-y-8">
 
       {/* Header */}
       <section className="space-y-2">

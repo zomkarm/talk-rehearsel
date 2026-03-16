@@ -86,7 +86,7 @@ export default function UnscriptedPractice() {
   }
 
   return (
-    <main className="flex-1 bg-white p-6 mt-2 border-2 rounded-tl-xl overflow-y-auto">
+    <main className="flex-1 bg-white p-6 rounded-tl-xl overflow-y-auto">
       <div className="max-w-5xl mx-auto space-y-14 text-center mt-6 mb-32">
 
         {/* ================= Header ================= */}
