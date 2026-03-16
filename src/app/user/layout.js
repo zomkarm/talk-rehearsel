@@ -1,10 +1,10 @@
 'use client'
 import { useState } from 'react'
 import Sidebar from '@/components/ui/user/blocks/Sidebar';
-import CreateSession from '@/components/ui/user/blocks/CreateSession';
+import MainPanel from '@/components/ui/user/blocks/MainPanel';
 import Header from '@/components/ui/user/blocks/Header';
 
-export default function CreateSessionLayout(){
+export default function UserLayout({ children }){
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const toggleSidebar = () => {
@@ -24,7 +24,7 @@ export default function CreateSessionLayout(){
               {/* Header */}
               <Header toggleSidebar={toggleSidebar} />
 
-              <CreateSession />
+              {children}
             </div>
           </div>
     );

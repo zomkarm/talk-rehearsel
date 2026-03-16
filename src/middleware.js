@@ -34,14 +34,14 @@ export async function middleware(request) {
     try {
       await jwtVerify(userToken, new TextEncoder().encode(process.env.JWT_SECRET));
       // If token is valid, redirect to dashboard
-      return NextResponse.redirect(new URL('/dashboard', request.url));
+      return NextResponse.redirect(new URL('/user/dashboard', request.url));
     } catch {
       // If token invalid, let them stay on login/signup
       return NextResponse.next();
     }
   }
 
-  if (path.startsWith('/dashboard') || path.startsWith('/interview-studio') || path.startsWith('/recordings') || path.startsWith('/project') || path.startsWith('/unscripted-practice') || path.startsWith('/settings') || path.startsWith('/practice-sessions')) {
+  if (path.startsWith('/user')) {
     if (!userToken) {
       return NextResponse.redirect(new URL('/login', request.url))
     }
@@ -82,13 +82,7 @@ export async function middleware(request) {
 
 export const config = {
   matcher: [
-    '/dashboard/:path*',
-    '/interview-studio',
-    '/unscripted-practice',
-    '/recordings',
-    '/practice-sessions/:path*',
-    '/settings',
-    '/project/:path*',
+    '/user/:path*',
     '/login',
     '/signup',
     '/admin/:path*',

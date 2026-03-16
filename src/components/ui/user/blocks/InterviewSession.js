@@ -236,7 +236,7 @@ export default function InterviewSession(){
     }catch(err){
 
       console.error(err)
-      router.push('/interview-studio')
+      router.push('/user/interview-studio')
 
     }finally{
       setLoading(false)
@@ -310,14 +310,14 @@ export default function InterviewSession(){
     setSesionCurrentIndex(0)
     setSessionCompleted(false)
 
-    router.replace(`/interview-studio/${id}`)
+    router.replace(`/user/interview-studio/${id}`)
 
   }
 
   function goToStudio(){
 
     resetSession()
-    router.push('/interview-studio')
+    router.push('/user/interview-studio')
 
   }
 

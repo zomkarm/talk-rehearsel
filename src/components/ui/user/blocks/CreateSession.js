@@ -46,7 +46,7 @@ export default function CreateSession() {
 
       if (!res.ok) throw new Error()
 
-      router.push('/practice-sessions/my')
+      router.push('/user/practice-sessions/my')
     } catch {
       alert('Failed to create session')
     } finally {
@@ -63,7 +63,7 @@ export default function CreateSession() {
             <h1 className="text-2xl font-semibold">
               Create Practice Session
             </h1>
-            <Link href="/practice-sessions" className="border px-4 py-2 rounded-lg text-sm">
+            <Link href="/user/practice-sessions" className="border px-4 py-2 rounded-lg text-sm">
               Back
             </Link>
           </div>

@@ -59,7 +59,7 @@ export default function Header() {
           <div className="flex items-center gap-4">
             {isLoggedIn ? (
               <a
-                href="/dashboard"
+                href="/user/dashboard"
                 className="px-4 py-2 rounded-md bg-gradient-to-r from-teal-600 to-indigo-600 text-white text-sm font-semibold shadow hover:opacity-90 transition"
               >
                 Go to Dashboard
@@ -124,7 +124,7 @@ export default function Header() {
 
               {isLoggedIn ? (
                 <a
-                  href="/dashboard"
+                  href="/user/dashboard"
                   className="px-4 py-2 rounded-md bg-gradient-to-r from-teal-600 to-indigo-600 text-white text-sm font-semibold shadow hover:opacity-90 transition"
                   onClick={() => setIsOpen(false)}
                 >

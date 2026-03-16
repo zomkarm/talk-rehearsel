@@ -38,7 +38,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
             <ul className="space-y-1.5">
               <li>
                 <a
-                  href="/dashboard"
+                  href="/user/dashboard"
                   className="flex items-center gap-2 px-3 py-2 rounded-md 
                              text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
                              hover:font-semibold transition"
@@ -60,7 +60,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
 
                <li>
                 <a
-                  href="/interview-studio"
+                  href="/user/interview-studio"
                   className="flex items-center gap-2 px-3 py-2 rounded-md 
                              text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
                              hover:font-semibold transition"
@@ -71,7 +71,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
 
               <li>
                 <a
-                  href="/unscripted-practice"
+                  href="/user/unscripted-practice"
                   className="flex items-center gap-2 px-3 py-2 rounded-md 
                              text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
                              hover:font-semibold transition"
@@ -82,7 +82,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
 
               <li>
                 <a
-                  href="/recordings"
+                  href="/user/recordings"
                   className="flex items-center gap-2 px-3 py-2 rounded-md 
                              text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
                              hover:font-semibold transition"
@@ -93,7 +93,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
 
                <li>
                 <a
-                  href="/practice-sessions"
+                  href="/user/practice-sessions"
                   className="flex items-center gap-2 px-3 py-2 rounded-md 
                              text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
                              hover:font-semibold transition"
@@ -115,7 +115,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen}) {
 
               <li>
                 <a
-                  href="/settings"
+                  href="/user/settings"
                   className="flex items-center gap-2 px-3 py-2 rounded-md 
                              text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 
                              hover:font-semibold transition"

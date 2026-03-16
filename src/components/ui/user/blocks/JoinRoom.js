@@ -36,7 +36,7 @@ export default function JoinRoom() {
           </div>
 
           <Link
-            href="/practice-sessions"
+            href="/user/practice-sessions"
             className="border px-4 py-2 rounded-lg text-sm"
           >
             Back

@@ -238,25 +238,25 @@ export default function PracticeSessions() {
 
           <div className="flex gap-2">
             <Link
-              href="/practice-sessions/my"
+              href="/user/practice-sessions/my"
               className="border px-4 py-2 rounded-lg text-sm"
             >
               My Sessions
             </Link>
             <Link
-              href="/practice-sessions/requests"
+              href="/user/practice-sessions/requests"
               className="border px-4 py-2 rounded-lg text-sm"
             >
               Requests
             </Link>
             <Link
-              href="/practice-sessions/join"
+              href="/user/practice-sessions/join"
               className="border px-4 py-2 rounded-lg text-sm"
             >
               Join Room
             </Link>
             <Link
-              href="/practice-sessions/create"
+              href="/user/practice-sessions/create"
               className="bg-indigo-600 text-white px-5 py-2 rounded-lg"
             >
               + Create

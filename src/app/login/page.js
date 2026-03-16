@@ -29,7 +29,7 @@ export default function LoginPage() {
       },
     })
 
-    if (res.ok) router.push('/dashboard')
+    if (res.ok) router.push('/user/dashboard')
     else {
       hideLoader()
       setErrors({ general: 'Login failed. Please check your credentials.' })

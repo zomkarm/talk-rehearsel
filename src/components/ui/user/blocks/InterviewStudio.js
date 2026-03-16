@@ -138,7 +138,7 @@ export default function InterviewStudio() {
     setSessionMode(mode)
     setSessionTimer(timer)
 
-    router.push(`/interview-studio/${selectedInterview.id}`)
+    router.push(`/user/interview-studio/${selectedInterview.id}`)
   }
 
   useEffect(()=>{

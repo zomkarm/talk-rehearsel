@@ -55,7 +55,7 @@ export default function MySessions() {
           <h1 className="text-2xl font-semibold">
             My Hosted Sessions
           </h1>
-          <Link href="/practice-sessions" className="border px-4 py-2 rounded-lg text-sm">
+          <Link href="/user/practice-sessions" className="border px-4 py-2 rounded-lg text-sm">
             Back
           </Link>
         </div>

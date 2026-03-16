@@ -29,7 +29,7 @@ export default function SignupPage() {
       },
     })
 
-    if (res.ok) router.push('/dashboard')
+    if (res.ok) router.push('/user/dashboard')
     else {
       hideLoader()
       setErrors({ general: 'Signup failed. Please try again.' })

@@ -75,7 +75,7 @@ export default function TalkRehearselClient() {
         {state === "IDLE" && (
           <button
             onClick={ ()=> {
-                router.push('/dashboard')
+                router.push('/user/dashboard')
               }}
             className="flex items-center gap-2 text-sm text-slate-600 hover:text-indigo-600 transition"
           >
@@ -205,7 +205,7 @@ export default function TalkRehearselClient() {
             }}
             onBack={() => setState("MODE_SELECTED")}
             onBackToRecordings={()=>{
-              router.push('/recordings')
+              router.push('/user/recordings')
             }}
           />
         )}
@@ -217,7 +217,7 @@ export default function TalkRehearselClient() {
             selectedActor={selectedActor}
             onBack={() => setState("MODE_SELECTED")}
             onBackToRecordings={()=>{
-              router.push('/recordings')
+              router.push('/user/recordings')
             }}
           />
         )}

@@ -135,7 +135,7 @@ export default function Header(props) {
                 <li
                   className="px-4 py-2 hover:bg-gray-50 cursor-pointer"
                   onClick={() => {
-                    router.push('/settings')
+                    router.push('/user/settings')
                   }}
                 >
                   My Account
