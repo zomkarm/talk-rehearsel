@@ -1,78 +1,77 @@
-import { User, ArrowLeft } from "lucide-react";
+import { User, ArrowLeft, History } from "lucide-react";
 
 export default function ActorSelector({ actors, onSelect, onBack, onBackToRecordings }) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-12">
       {/* Header */}
-      <div>
-        <h2 className="text-xl font-semibold text-slate-800">
+      <div className="text-center space-y-3">
+        <h2 className="text-3xl font-black text-slate-900 tracking-tight">
           Choose Your Role
         </h2>
-        <p className="text-sm text-slate-500">
-          Select which part you want to practice
+        <p className="text-slate-500 font-medium tracking-wide">
+          Select which character you want to represent in this rehearsal.
         </p>
       </div>
 
       {/* Actor Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
         {actors.map((actor) => (
           <button
             key={actor.id}
             onClick={() => onSelect(actor)}
             className="
-              group
-              flex items-center gap-4
-              p-4 rounded-xl
-              bg-white/70 backdrop-blur
-              border border-white/40
-              shadow-sm
-              transition
-              hover:shadow-md
-              hover:border-indigo-300
-              hover:bg-indigo-50
+              group relative flex flex-col items-center gap-6
+              rounded-[3rem] p-12 text-center
+              bg-white border border-slate-200
+              shadow-sm hover:shadow-2xl hover:shadow-indigo-500/10 
+              hover:-translate-y-2 transition-all duration-500
             "
           >
-            {/* Avatar */}
-            <div
-              className="
-                w-10 h-10 rounded-full
-                flex items-center justify-center
-                bg-indigo-100 text-indigo-600
-                group-hover:bg-indigo-200
-                transition
-              "
-            >
-              <User className="w-5 h-5" />
+            {/* Avatar with dynamic glow */}
+            <div className="
+              w-24 h-24 rounded-full
+              bg-slate-50 text-slate-400
+              flex items-center justify-center
+              group-hover:bg-indigo-600 group-hover:text-white
+              transition-all duration-500 shadow-inner ring-8 ring-slate-50 group-hover:ring-indigo-50
+            ">
+              <User size={40} strokeWidth={2.5} />
             </div>
 
-            {/* Info */}
-            <div className="text-left">
-              <div className="font-medium text-slate-800">
+            <div className="space-y-2">
+              <h3 className="text-2xl font-black text-slate-800 tracking-tight">
                 {actor.name}
-              </div>
-              <div className="text-xs text-slate-500">
-                Practice this role
-              </div>
+              </h3>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-indigo-500 opacity-80">
+                Practice This Role
+              </p>
             </div>
+
+            <div className="absolute top-6 right-6 w-3 h-3 rounded-full bg-slate-100 group-hover:bg-indigo-500 transition-colors" />
           </button>
         ))}
       </div>
 
-      {/* Back */}
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back
-      </button>
-      <button
-        onClick={onBackToRecordings}
-        className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Check Previous Recording
-      </button>
+      {/* Multi-Action Footer */}
+      <div className="pt-10 border-t border-slate-100 flex flex-col items-center gap-6">
+        <div className="flex flex-wrap justify-center gap-8">
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 px-6 py-2 rounded-xl font-black text-xs uppercase tracking-widest text-slate-400 hover:text-indigo-600 transition-all"
+          >
+            <ArrowLeft className="w-4 h-4" strokeWidth={3} />
+            Back to Mode
+          </button>
+
+          <button
+            onClick={onBackToRecordings}
+            className="flex items-center gap-2 px-6 py-2 rounded-xl font-black text-xs uppercase tracking-widest text-slate-400 hover:text-teal-600 transition-all"
+          >
+            <History className="w-4 h-4" strokeWidth={3} />
+            Previous Recordings
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

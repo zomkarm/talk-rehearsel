@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from 'sonner'
 import { Mic, Square, SkipForward, ArrowLeft, Loader2, PlayCircle } from "lucide-react";
+import Portal from '@/components/ui/shared/Portal'
 
 export default function PracticeView({
   situation,
@@ -197,170 +198,205 @@ export default function PracticeView({
   ----------------------------- */
   if (currentIndex >= lines.length) {
     return (
-      <div className="text-center space-y-4">
-        <h2 className="text-xl font-semibold">Practice complete 🎉</h2>
-        <button className="underline" onClick={onBack}>
-          Back
-        </button>
-        <button className="underline pl-4" onClick={onBackToRecordings}>
-          View Recordings
-        </button>
+      <div className="flex flex-col items-center justify-center py-20 space-y-10 animate-in fade-in zoom-in-95 duration-700">
+        {/* Celebration Icon */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-indigo-500/20 rounded-full blur-3xl animate-pulse" />
+          <div className="relative w-24 h-24 bg-white rounded-[2.5rem] shadow-2xl shadow-indigo-100 flex items-center justify-center border border-indigo-50">
+            <span className="text-5xl">🎉</span>
+          </div>
+        </div>
+
+        {/* Success Message */}
+        <div className="text-center space-y-3">
+          <h2 className="text-4xl font-black text-slate-900 tracking-tight">
+            Practice Complete
+          </h2>
+          <p className="text-slate-500 font-medium max-w-xs mx-auto">
+            You've successfully finished the rehearsal for <span className="text-indigo-600 font-bold">{situation.title}</span>.
+          </p>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
+          <button
+            onClick={onBackToRecordings}
+            className="w-full py-4 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-slate-200 hover:bg-indigo-600 hover:-translate-y-0.5 transition-all"
+          >
+            View All Recordings
+          </button>
+          
+          <button
+            onClick={onBack}
+            className="w-full py-4 bg-white border-2 border-slate-100 text-slate-400 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-slate-50 hover:text-slate-900 transition-all"
+          >
+            Back to Menu
+          </button>
+        </div>
+
+        {/* Encouragement Badge */}
+        <div className="pt-10">
+          <div className="px-6 py-2 bg-emerald-50 rounded-full border border-emerald-100">
+            <p className="text-[10px] font-black uppercase tracking-widest text-emerald-600">
+              Session Saved Successfully
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-10">
       {/* Header */}
-      <div>
-        <h2 className="text-xl font-semibold text-slate-800">
-          Practice: {situation.title}
-        </h2>
-        <p className="text-sm text-slate-500">
-          Speak when it’s your turn — listen carefully otherwise
-        </p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-slate-100">
+        <div className="space-y-2">
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight">
+            Practice: {situation.title}
+          </h2>
+          <p className="text-slate-500 font-medium tracking-wide">
+            Speak when it’s your turn — listen carefully otherwise.
+          </p>
+        </div>
+        
+        <button
+          onClick={onBack}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all"
+        >
+          <ArrowLeft className="w-4 h-4" strokeWidth={3} />
+          Exit Session
+        </button>
       </div>
 
-      {/* Current Line */}
-      <div
-        className={`
-          p-6 rounded-xl border
-          transition
-          ${isUserLine
-            ? "bg-indigo-50 border-indigo-300"
-            : "bg-white/70 border-white/40"}
-        `}
-      >
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-medium text-indigo-600">
-            {currentLine.actor.name}
-          </span>
+      {/* Primary Dialogue Card */}
+      <div className={`
+        relative overflow-hidden rounded-[3rem] p-10 md:p-16 transition-all duration-700
+        ${isUserLine 
+          ? "bg-white border-2 border-indigo-500 shadow-2xl shadow-indigo-200/50 scale-[1.02]" 
+          : "bg-slate-50 border border-slate-100 opacity-90"}
+      `}>
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className={`w-3 h-3 rounded-full ${isUserLine ? 'bg-indigo-500 animate-pulse' : 'bg-slate-300'}`} />
+              <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${isUserLine ? 'text-indigo-600' : 'text-slate-500'}`}>
+                {currentLine.actor.name}
+              </span>
+            </div>
 
-          {!isUserLine && (
-            <span className="flex items-center gap-2 text-xs text-slate-500">
-              <Loader2 className="w-3 h-3 animate-spin" />
-              Listening…
-            </span>
+            {!isUserLine && (
+              <div className="flex items-center gap-2 px-3 py-1 bg-white rounded-full shadow-sm">
+                <Loader2 className="w-3 h-3 animate-spin text-indigo-600" />
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">{currentLine.actor.name} Speaking...</span>
+              </div>
+            )}
+          </div>
+
+          <p className={`text-2xl md:text-4xl font-bold leading-relaxed tracking-tight ${isUserLine ? 'text-slate-900' : 'text-slate-600 italic'}`}>
+            "{currentLine.text}"
+          </p>
+        </div>
+      </div>
+
+      {/* User Control Section */}
+      {isUserLine && (
+        <div className="space-y-6 animate-in fade-in slide-in-from-top-4 duration-500">
+          
+          {/* BEFORE RECORDING */}
+          {!isRecording && !recordedUrl && (
+            <div className="flex flex-wrap items-center gap-4">
+              <button
+                onClick={startRecording}
+                disabled={isPracticeLocked}
+                className={`
+                  group flex items-center gap-3 px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-xl
+                  ${isPracticeLocked
+                    ? 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
+                    : 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-200 hover:-translate-y-0.5'}
+                `}
+              >
+                {profileLoading ? (
+                  <><Loader2 className="w-4 h-4 animate-spin" /> Checking Access...</>
+                ) : (
+                  <><Mic className="w-4 h-4 transition-transform group-hover:scale-110" strokeWidth={3} /> Start Recording</>
+                )}
+              </button>
+
+              {currentLine.voices.find(v => v.accent === accent)?.audio_src && (
+                <button
+                  onClick={() => {
+                    const src = currentLine.voices.find(v => v.accent === accent).audio_src;
+                    if (audioRef.current) audioRef.current.pause();
+                    const audio = new Audio(src);
+                    audioRef.current = audio;
+                    audio.play();
+                  }}
+                  className="flex items-center gap-3 px-8 py-4 bg-indigo-50 text-indigo-600 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-indigo-100 transition-all"
+                >
+                  <PlayCircle className="w-4 h-4" strokeWidth={3} />
+                  Play Reference
+                </button>
+              )}
+
+              <button
+                onClick={skipLine}
+                className="flex items-center gap-3 px-8 py-4 border-2 border-slate-100 text-slate-400 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 hover:text-slate-600 transition-all"
+              >
+                <SkipForward className="w-4 h-4" strokeWidth={3} />
+                Skip
+              </button>
+            </div>
+          )}
+
+          {/* DURING RECORDING */}
+          {isRecording && (
+            <div className="flex items-center justify-between p-6 bg-red-50 border-2 border-red-100 rounded-[2rem]">
+              <div className="flex items-center gap-4">
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute w-4 h-4 bg-red-400 rounded-full animate-ping" />
+                  <div className="relative w-3 h-3 bg-red-600 rounded-full" />
+                </div>
+                <span className="font-black text-xs text-red-600 uppercase tracking-widest">Recording Live Audio...</span>
+              </div>
+
+              <button
+                onClick={stopRecording}
+                className="flex items-center gap-3 px-8 py-4 bg-red-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-red-700 transition-all shadow-xl shadow-red-100"
+              >
+                <Square className="w-4 h-4" fill="currentColor" /> Stop
+              </button>
+            </div>
+          )}
+
+          {/* AFTER RECORDING */}
+          {recordedUrl && (
+            <div className="p-8 bg-slate-900 rounded-[2.5rem] shadow-2xl space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Playback Ready</span>
+              </div>
+              
+              <audio controls src={recordedUrl} className="w-full h-12 brightness-90 contrast-125" />
+
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setRecordedUrl(null)}
+                  className="flex-1 py-4 bg-white/10 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-white/20 transition-all"
+                >
+                  Retry Recording
+                </button>
+
+                <button
+                  onClick={goNext}
+                  className="flex-1 py-4 bg-indigo-500 text-white rounded-xl font-black text-xs uppercase tracking-widest hover:bg-indigo-600 shadow-lg shadow-indigo-500/20 transition-all"
+                >
+                  Continue Session
+                </button>
+              </div>
+            </div>
           )}
         </div>
-
-        <p className="text-lg text-slate-800 leading-relaxed">
-          {currentLine.text}
-        </p>
-      </div>
-
-      {/* User Line Controls */}
-      {/* User Line Controls */}
-{isUserLine && (
-  <div className="space-y-4">
-    {/* BEFORE RECORDING */}
-    {!isRecording && !recordedUrl && (
-      <div className="flex flex-wrap gap-3">
-        <button
-          onClick={startRecording}
-          disabled={isPracticeLocked}
-          className={`
-            flex items-center gap-2 px-5 py-2.5 rounded-lg
-            ${isPracticeLocked
-              ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
-              : 'bg-green-600 text-white hover:bg-green-700'}
-          `}
-        >
-          {profileLoading ? (
-            <>
-              <Loader2 className="w-4 h-4 animate-spin" />
-              Checking access…
-            </>
-          ) : (
-            <>
-              <Mic className="w-4 h-4" />
-              Start Recording
-            </>
-          )}
-        </button>
-
-        <button
-          onClick={skipLine}
-          className="flex items-center gap-2 px-5 py-2.5 border rounded-lg text-slate-600 hover:bg-slate-50"
-        >
-          <SkipForward className="w-4 h-4" />
-          Skip
-        </button>
-
-        {/* NEW: Play Reference Audio */}
-        {currentLine.voices.find(v => v.accent === accent)?.audio_src && (
-          <button
-            onClick={() => {
-              const src = currentLine.voices.find(v => v.accent === accent).audio_src;
-              if (audioRef.current) audioRef.current.pause();
-              const audio = new Audio(src);
-              audioRef.current = audio;
-              audio.play();
-            }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-          >
-            <PlayCircle className="w-4 h-4" />
-            Play Audio
-          </button>
-        )}
-      </div>
-    )}
-
-    {/* DURING RECORDING */}
-    {isRecording && (
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2 text-red-600 font-medium">
-          <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse" />
-          Recording…
-        </div>
-
-        <button
-          onClick={stopRecording}
-          className="flex items-center gap-2 px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700"
-        >
-          <Square className="w-4 h-4" />
-          Stop
-        </button>
-      </div>
-    )}
-
-    {/* AFTER RECORDING */}
-    {recordedUrl && (
-      <div className="space-y-3">
-        <audio controls src={recordedUrl} className="w-full rounded" />
-
-        <div className="flex gap-3">
-          {/* NEW: Retry Button */}
-          <button
-            onClick={() => setRecordedUrl(null)}
-            className="px-5 py-2.5 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
-          >
-            Retry
-          </button>
-
-          {/* Continue Button */}
-          <button
-            onClick={goNext}
-            className="px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
-          >
-            Continue
-          </button>
-        </div>
-      </div>
-    )}
-  </div>
-)}
-
-
-      {/* Back */}
-      <button
-        onClick={onBack}
-        className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-800"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back
-      </button>
+      )}
     </div>
   );
-
 }

@@ -6,7 +6,8 @@ import {
   Headphones,
   Theater,
   Clock,
-  CheckCircle2
+  CheckCircle2,
+  AudioLines
 } from 'lucide-react'
 
 export default function MainPanel() {
@@ -37,132 +38,113 @@ export default function MainPanel() {
   }, [])
 
   return (
-    <main className="flex-1 bg-white p-6 rounded-tl-xl overflow-y-auto space-y-8">
+<main className="flex-1 bg-white p-8 overflow-y-auto space-y-8">
+  {/* Header with Glass Effect */}
+  <section className="flex justify-between items-end border-b border-slate-200/60 pb-6">
+    <div>
+      <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Dashboard</h1>
+      <p className="text-slate-500 text-sm">Elevate your communication practice.</p>
+    </div>
+    <div className="hidden md:block text-right text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">
+      Studio Status: <span className="text-teal-500">Ready</span>
+    </div>
+  </section>
 
-      {/* Header */}
-      <section>
-        <h1 className="text-2xl font-bold text-gray-800">
-          Dashboard
-        </h1>
-        <p className="text-gray-500 mt-1">
-          Your practice overview and progress at a glance
-        </p>
-      </section>
-
-      {/* Stats Cards */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-        <div className="rounded-xl border bg-indigo-50 p-5">
-          <div className="flex items-center gap-3 mb-2">
-            <Theater className="text-indigo-600" />
-            <h3 className="font-semibold text-indigo-900">
-              Situations Practiced
-            </h3>
-          </div>
-          <p className="text-3xl font-bold text-indigo-800">
-            {loading ? '—' : stats.situations}
-          </p>
-          <p className="text-sm text-indigo-700">
-            Unique situations practiced
-          </p>
+  {/* Modern Bento Stats */}
+  <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {/* Situations - Indigo Focus */}
+    <div className="relative group bg-white border border-indigo-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2 bg-indigo-50 rounded-lg text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+          <Theater size={20} />
         </div>
+        <h3 className="text-[11px] font-black uppercase tracking-widest text-slate-400">Practice Hub</h3>
+      </div>
+      <p className="text-3xl font-bold text-slate-900">{loading ? '—' : stats.situations}</p>
+      <p className="text-xs font-semibold text-indigo-600/70 mt-1">Unique Situations</p>
+    </div>
 
-        <div className="rounded-xl border bg-emerald-50 p-5">
-          <div className="flex items-center gap-3 mb-2">
-            <Mic className="text-emerald-600" />
-            <h3 className="font-semibold text-emerald-900">
-              Lines Recorded
-            </h3>
-          </div>
-          <p className="text-3xl font-bold text-emerald-800">
-            {loading ? '—' : stats.recordings}
-          </p>
-          <p className="text-sm text-emerald-700">
-            Total voice recordings
-          </p>
+    {/* Recordings - Teal Focus */}
+    <div className="relative group bg-white border border-teal-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2 bg-teal-50 rounded-lg text-teal-600 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+          <Mic size={20} />
         </div>
+        <h3 className="text-[11px] font-black uppercase tracking-widest text-slate-400">Audio Library</h3>
+      </div>
+      <p className="text-3xl font-bold text-slate-900">{loading ? '—' : stats.recordings}</p>
+      <p className="text-xs font-semibold text-teal-600/70 mt-1">Voice Recorded</p>
+    </div>
 
-        <div className="rounded-xl border bg-amber-50 p-5">
-          <div className="flex items-center gap-3 mb-2">
-            <Theater className="text-amber-600" />
-            <h3 className="font-semibold text-amber-900">
-              Conversations Completed
-            </h3>
-          </div>
-          <p className="text-3xl font-bold text-amber-800">
-            {loading ? '—' : stats.situations}
-          </p>
-          <p className="text-sm text-amber-700">
-            Unique situations practiced
-          </p>
+    {/* Completed - Mixed Glow */}
+    <div className="relative group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2 bg-slate-50 rounded-lg text-slate-600 group-hover:bg-slate-900 group-hover:text-white transition-colors">
+          <CheckCircle2 size={20} />
         </div>
+        <h3 className="text-[11px] font-black uppercase tracking-widest text-slate-400">Milestones</h3>
+      </div>
+      <p className="text-3xl font-bold text-slate-900">{loading ? '—' : stats.situations}</p>
+      <p className="text-xs font-semibold text-slate-500 mt-1">Conversations Finalized</p>
+    </div>
+  </section>
 
-        {/*<div className="rounded-xl border bg-amber-50 p-5">
-          <div className="flex items-center gap-3 mb-2">
-            <Clock className="text-amber-600" />
-            <h3 className="font-semibold text-amber-900">
-              Practice Time
-            </h3>
-          </div>
-          <p className="text-3xl font-bold text-amber-800">
-            {loading ? '—' : `${stats.practiceMinutes} min`}
-          </p>
-          <p className="text-sm text-amber-700">
-            Total rehearsal duration
-          </p>
-        </div>*/}
+  {/* Activity Feed with Studio Aesthetics */}
+  <section className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
+    <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between">
+      <div className="flex items-center gap-2">
+        <Headphones size={18} className="text-indigo-500" />
+        <h2 className="text-sm font-bold text-slate-800">Recent Rehearsals</h2>
+      </div>
+      <div className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
+    </div>
 
-      </section>
-
-      {/* Recent Activity (placeholder) */}
-      <section className="rounded-xl border p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Headphones className="text-gray-700" />
-          <h2 className="text-lg font-semibold text-gray-800">
-            Recent Activity
-          </h2>
-        </div>
-
-        {stats.recentActivity.length === 0 ? (
-          <p className="text-sm text-gray-500">
-            No recent activity yet.
-          </p>
-        ) : (
-          <div className="space-y-3">
-            {stats.recentActivity.map((item, i) => (
-              <div
-                key={i}
-                className="text-sm text-gray-700 flex flex-col"
-              >
-                <span className="font-medium">
-                  <span className="font-bold">Situation : </span> {item.situationTitle}
-                </span>
-                <span className="text-gray-500">
-                  {item.actorName}: “{item.lineText}”
-                </span>
+    <div className="p-6">
+      {stats.recentActivity.length === 0 ? (
+        <p className="text-sm text-slate-400 text-center py-4">Waiting for your first session...</p>
+      ) : (
+        <div className="space-y-6">
+          {stats.recentActivity.map((item, i) => (
+            <div key={i} className="flex gap-4 group">
+              <div className="flex flex-col items-center">
+                <div className="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-indigo-600 text-xs font-bold border border-indigo-100 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+                  {i + 1}
+                </div>
+                {i !== stats.recentActivity.length - 1 && <div className="w-px h-full bg-slate-100 my-1" />}
               </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-
-      {/* Tips */}
-      <section className="rounded-xl bg-gray-50 border p-6">
-        <div className="flex items-start gap-3">
-          <CheckCircle2 className="text-indigo-600 mt-0.5" />
-          <div>
-            <h3 className="font-semibold text-gray-800 mb-1">
-              Getting Started
-            </h3>
-            <p className="text-sm text-gray-600">
-              Pick a situation from the sidebar, choose your role, and start practicing.
-              Your recordings will appear automatically once saved.
-            </p>
-          </div>
+              <div className="pb-4">
+                <h4 className="text-[13px] font-bold text-slate-800 tracking-tight">{item.situationTitle}</h4>
+                <div className="mt-1.5 px-4 py-2 bg-slate-50 rounded-r-xl rounded-bl-xl border-l-2 border-teal-500">
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                    <span className="text-[10px] uppercase text-teal-600 font-bold mr-1">{item.actorName}:</span> 
+                    “{item.lineText}”
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </section>
+      )}
+    </div>
+  </section>
 
-    </main>
+  {/* Footer Callout */}
+  <div className="rounded-2xl bg-indigo-600 p-[1px] shadow-lg shadow-indigo-100">
+    <div className="bg-white rounded-[15px] p-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600">
+          <AudioLines size={24} />
+        </div>
+        <div>
+          <h3 className="text-sm font-bold text-slate-900">Ready to break the script?</h3>
+          <p className="text-xs text-slate-500 mt-0.5">Select a practice module to begin your rehearsal.</p>
+        </div>
+      </div>
+      <button className="w-full md:w-auto px-6 py-2.5 bg-indigo-600 text-white text-xs font-bold rounded-xl hover:bg-indigo-700 transition-all shadow-md shadow-indigo-200">
+        Start Practicing
+      </button>
+    </div>
+  </div>
+</main>
   )
 }

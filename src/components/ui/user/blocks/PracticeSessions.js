@@ -221,158 +221,153 @@ export default function PracticeSessions() {
     [sessions]
   )
 
-  return (
-    <main className="flex-1 bg-white p-6 rounded-tl-xl overflow-y-auto">
-      <div className="max-w-6xl mx-auto space-y-6">
-
-        {/* Header */}
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className="text-2xl font-semibold">
-              Practice Sessions
-            </h1>
-            <p className="text-sm text-gray-500 mt-1">
-              Discover and join real-time speaking sessions
-            </p>
-          </div>
-
-          <div className="flex gap-2">
-            <Link
-              href="/user/practice-sessions/my"
-              className="border px-4 py-2 rounded-lg text-sm"
-            >
-              My Sessions
-            </Link>
-            <Link
-              href="/user/practice-sessions/requests"
-              className="border px-4 py-2 rounded-lg text-sm"
-            >
-              Requests
-            </Link>
-            <Link
-              href="/user/practice-sessions/join"
-              className="border px-4 py-2 rounded-lg text-sm"
-            >
-              Join Room
-            </Link>
-            <Link
-              href="/user/practice-sessions/create"
-              className="bg-indigo-600 text-white px-5 py-2 rounded-lg"
-            >
-              + Create
-            </Link>
-          </div>
+return (
+  <main className="flex-1 bg-white p-8 overflow-y-auto">
+    <div className="max-w-7xl mx-auto space-y-10 mb-20">
+      
+      {/* ================= Header Section ================= */}
+      <section className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-slate-100 pb-8">
+        <div>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+            <div className="w-2 h-6 bg-indigo-600 rounded-full" />
+            Live Practice Sessions
+          </h1>
+          <p className="text-slate-500 text-sm mt-1 font-medium">
+            Join real-time speaking rooms with other practitioners worldwide.
+          </p>
         </div>
 
-        {/* 🌍 World Sessions Map (visual only) */}
-          {!loading && sessions.length > 0 && (
-            <WorldSessionsMap sessions={sessions} />
-          )}
+        <div className="flex flex-wrap items-center gap-3">
+          <Link href="/user/practice-sessions/my" className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all">
+            My Sessions
+          </Link>
+          <Link href="/user/practice-sessions/requests" className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all">
+            Requests
+          </Link>
+          <Link href="/user/practice-sessions/join" className="px-4 py-2 rounded-xl border border-slate-200 text-xs font-bold uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-all">
+            Join Room
+          </Link>
+          <Link href="/user/practice-sessions/create" className="px-5 py-2 rounded-xl bg-slate-900 text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-indigo-600 transition-all shadow-lg shadow-slate-200">
+            + Create
+          </Link>
+        </div>
+      </section>
 
-        {/* Content */}
+      {/* ================= World Map Visualization ================= */}
+      {!loading && sessions.length > 0 && (
+        <section className="rounded-3xl overflow-hidden border border-slate-200 shadow-sm bg-slate-50">
+           <WorldSessionsMap sessions={sessions} />
+        </section>
+      )}
+
+      {/* ================= Content Stage ================= */}
+      <section className="min-h-[400px]">
         {loading ? (
-          <p className="text-gray-500">Loading…</p>
+          <div className="flex items-center justify-center h-64">
+            <p className="text-slate-400 font-bold text-xs uppercase tracking-widest animate-pulse">Loading sessions...</p>
+          </div>
         ) : sessions.length === 0 ? (
-          <div className="text-center py-16 border rounded-xl bg-gray-50">
-            No upcoming sessions available.
+          <div className="text-center py-20 border-2 border-dashed border-slate-100 rounded-3xl space-y-4">
+             <div className="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center text-slate-300 mx-auto">
+               <Calendar size={32} />
+             </div>
+             <p className="text-slate-400 font-bold text-sm uppercase tracking-widest">No upcoming sessions available.</p>
+             <p className="text-slate-400 text-xs mt-1">Check back later or create your own room to start practicing.</p>
           </div>
         ) : (
-          <div className="space-y-10">
-
+          <div className="space-y-16">
             {Object.entries(groupedSessions).map(([day, daySessions]) => (
-              <section key={day} className="space-y-4">
-
-                {/* Day Header */}
-                <div className="sticky top-0 bg-white z-10">
-                  <h2 className="text-lg font-semibold">
+              <section key={day} className="relative">
+                
+                {/* Sticky Day Header */}
+                <div className="sticky top-0 bg-white/80 backdrop-blur-md z-20 py-4 mb-8 border-b border-slate-50">
+                  <h2 className="text-sm font-black text-slate-900 uppercase tracking-[0.3em] flex items-center gap-3">
+                    <span className="w-8 h-px bg-slate-200" />
                     {day}
                   </h2>
                 </div>
 
-                {/* Timeline */}
-                <div className="space-y-4">
+                {/* Timeline Layout */}
+                <div className="space-y-8 pl-0 md:pl-10 relative">
+                  {/* Vertical Timeline Line (Desktop Only) */}
+                  <div className="hidden md:block absolute left-[115px] top-0 bottom-0 w-px bg-slate-100" />
+
                   {daySessions.map(s => {
                     const date = new Date(s.scheduled_at)
-
                     return (
-                      <div
-                        key={s.id}
-                        className="flex gap-4 items-start"
-                      >
-                        {/* Time rail */}
-                        <div className="w-24 text-right shrink-0 pt-1">
-                          <p className="text-sm font-medium">
-                            {date.toLocaleTimeString([], {
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            })}
+                      <div key={s.id} className="flex flex-col md:flex-row gap-6 items-start group">
+                        
+                        {/* Time Column */}
+                        <div className="w-32 md:text-right shrink-0 pt-2 space-y-1 z-10">
+                          <p className="text-lg font-black text-slate-900 tracking-tighter leading-none">
+                            {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </p>
-                          <p className="text-xs text-gray-400">
-                            {s.duration_minutes} min
+                          <p className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest bg-indigo-50 inline-block px-2 py-0.5 rounded">
+                            {s.duration_minutes} MINS
                           </p>
                         </div>
 
-                        {/* Card */}
-                        <div className="flex-1 border rounded-xl p-4 hover:shadow-sm transition bg-white">
-
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <h3 className="font-semibold">
+                        {/* Session Card */}
+                        <div className="flex-1 bg-white border border-slate-200 rounded-3xl p-6 md:p-8 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 relative overflow-hidden">
+                          <div className="absolute top-0 left-0 w-1 h-full bg-slate-100 group-hover:bg-teal-500 transition-colors" />
+                          
+                          <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
+                            <div className="space-y-3 flex-1">
+                              <div className="flex items-center gap-3">
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-teal-600 bg-teal-50 px-2 py-0.5 rounded">
+                                  {s.mode}
+                                </span>
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                  {s.timezone}
+                                </span>
+                              </div>
+                              
+                              <h3 className="text-xl font-bold text-slate-800 tracking-tight">
                                 {s.title}
                               </h3>
 
                               {s.description && (
-                                <p className="text-sm text-gray-600 mt-1">
-                                  {s.description}
+                                <p className="text-sm text-slate-500 font-medium leading-relaxed max-w-2xl italic">
+                                  "{s.description}"
                                 </p>
                               )}
                             </div>
 
-                            <span className="text-xs px-2 py-1 rounded-full bg-gray-100 capitalize">
-                              {s.mode}
-                            </span>
+                            {/* Actions Area */}
+                            <div className="shrink-0 w-full lg:w-auto pt-2">
+                              {s.isHost ? (
+                                <div className="flex items-center gap-2 px-4 py-2 bg-indigo-50 rounded-xl border border-indigo-100 text-indigo-700">
+                                  <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
+                                  <span className="text-[10px] font-black uppercase tracking-widest">Hosting Session</span>
+                                </div>
+                              ) : s.hasRequested ? (
+                                <button
+                                  disabled
+                                  className="w-full lg:w-auto px-6 py-2.5 rounded-xl border border-slate-200 text-slate-400 text-[10px] font-black uppercase tracking-widest cursor-not-allowed bg-slate-50"
+                                >
+                                  Request {s.requestStatus}
+                                </button>
+                              ) : (
+                                <button
+                                  onClick={() => requestToJoin(s.id)}
+                                  className="w-full lg:w-auto px-8 py-2.5 rounded-xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest hover:bg-indigo-600 transition-all shadow-lg shadow-slate-100"
+                                >
+                                  Request to Join
+                                </button>
+                              )}
+                            </div>
                           </div>
-
-                          <p className="text-xs text-gray-500 mt-2">
-                            Timezone: {s.timezone}
-                          </p>
-
-                          {/* Actions */}
-                          <div className="mt-4">
-                            {s.isHost ? (
-                              <span className="text-xs text-indigo-600 font-medium">
-                                You’re hosting this session
-                              </span>
-                            ) : s.hasRequested ? (
-                              <button
-                                disabled
-                                className="text-xs px-3 py-1 border rounded-lg text-gray-400 cursor-not-allowed"
-                              >
-                                Request {s.requestStatus}
-                              </button>
-                            ) : (
-                              <button
-                                onClick={() => requestToJoin(s.id)}
-                                className="text-sm px-3 py-1 border rounded-lg hover:bg-gray-50"
-                              >
-                                Request to Join
-                              </button>
-                            )}
-                          </div>
-
                         </div>
                       </div>
                     )
                   })}
                 </div>
-
               </section>
             ))}
-
           </div>
         )}
-
-      </div>
-    </main>
-  )
+      </section>
+    </div>
+  </main>
+)
 }

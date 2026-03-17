@@ -6,7 +6,8 @@ import {
   Mic,
   PlayCircle,
   Users,
-  ArrowLeft
+  ArrowLeft,
+  CheckCircle2, Circle, ChevronRight, Layout, Globe, Activity, Settings2
 } from "lucide-react";
 import { useRouter } from 'next/navigation'
 
@@ -59,168 +60,116 @@ export default function TalkRehearselClient() {
   const activeStepIndex = STEPS.findIndex(s => s.key === state);
 
   return (
-    <main className="flex-1 h-screen bg-gradient-to-br from-indigo-100 to-purple-100 p-6 rounded-tl-xl overflow-y-auto space-y-6">
+    <main className="flex-1 min-h-screen bg-gradient-to-br from-indigo-50 to-teal-50 p-6 lg:p-12 overflow-y-auto relative">
+      
+      {/* Subtle Atmospheric Glows */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-100/30 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-teal-50/40 rounded-full blur-[100px] pointer-events-none" />
 
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold text-slate-800">
-            Talk Rehearsal
-          </h1>
-          <p className="text-sm text-slate-600">
-            Practice real conversations with guided audio
-          </p>
-        </div>
+      <div className="max-w-6xl mx-auto space-y-8 relative z-10">
+        
+        {/* ================= Header ================= */}
+        <section className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-4">
+          <div className="space-y-2">
+            <h1 className="text-4xl font-black text-slate-900 tracking-tighter flex items-center gap-3">
+              <div className="w-1.5 h-10 bg-gradient-to-t from-indigo-600 via-teal-400 to-teal-300 rounded-full" />
+              Talk Rehearsal
+            </h1>
+            <p className="text-slate-500 font-semibold text-xs ml-5 uppercase tracking-widest opacity-80">
+              Practice real conversations
+            </p>
+          </div>
 
-        {state === "IDLE" && (
           <button
-            onClick={ ()=> {
-                router.push('/user/dashboard')
-              }}
-            className="flex items-center gap-2 text-sm text-slate-600 hover:text-indigo-600 transition"
+            onClick={state === "IDLE" ? () => router.push('/user/dashboard') : reset}
+            className="group flex items-center gap-3 px-8 py-3 rounded-2xl bg-slate-900 text-white text-[11px] font-black uppercase tracking-[0.2em] hover:bg-indigo-600 transition-all shadow-2xl shadow-slate-200 active:scale-95"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" strokeWidth={3} />
+            {state === "IDLE" ? "Exit" : "Reset Session"}
           </button>
-        )}
+        </section>
 
-        {state !== "IDLE" && (
-          <button
-            onClick={reset}
-            className="flex items-center gap-2 text-sm text-slate-600 hover:text-indigo-600 transition"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Reset
-          </button>
-        )}
-      </div>
+        {/* ================= Step Indicator ================= */}
+        <nav className="flex items-center justify-between gap-2 p-2 bg-white/60 backdrop-blur-2xl border border-white rounded-[2.5rem] shadow-xl shadow-slate-200/40 overflow-x-auto no-scrollbar">
+          {STEPS.map((step, index) => {
+            const Icon = step.icon;
+            const isActive = index === activeStepIndex;
+            const isDone = index < activeStepIndex;
 
-      {/* Step Indicator (Glass) */}
-      <div className="flex items-center gap-6 rounded-xl px-6 py-4
-                      bg-white/60 backdrop-blur-md border border-white/40 shadow-sm">
-        {STEPS.map((step, index) => {
-          const Icon = step.icon;
-          const isActive = index === activeStepIndex;
-          const isDone = index < activeStepIndex;
-
-          return (
-            <div
-              key={step.key}
-              className={`flex items-center gap-2 text-sm font-medium transition ${
-                isActive
-                  ? "text-indigo-700"
-                  : isDone
-                  ? "text-slate-700"
-                  : "text-slate-400"
-              }`}
-            >
-              <Icon className="w-4 h-4" />
-              {step.label}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Context Summary */}
-      {(situation || accent || mode) && (
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {situation && (
-            <div className="p-4 rounded-xl bg-gradient-to-br from-indigo-200 to-indigo-100 border border-indigo-200/50">
-              <div className="text-xs text-indigo-600 mb-1">Situation</div>
-              <div className="font-medium text-slate-800">
-                {situation.title}
+            return (
+              <div key={step.key} className="flex items-center flex-1 min-w-fit">
+                <div className={`flex items-center gap-3 px-6 py-3 rounded-[1.8rem] transition-all duration-500 ${
+                  isActive ? "bg-white shadow-lg shadow-indigo-100 scale-105" : ""
+                }`}>
+                  <div className={`w-9 h-9 rounded-2xl flex items-center justify-center transition-all ${
+                    isActive ? "bg-indigo-600 text-white rotate-6 shadow-indigo-200 shadow-lg" : isDone ? "bg-teal-500 text-white" : "bg-slate-100 text-slate-400"
+                  }`}>
+                    {isDone ? <CheckCircle2 size={18} strokeWidth={3} /> : <Icon size={18} strokeWidth={isActive ? 3 : 2} />}
+                  </div>
+                  <span className={`text-[11px] font-black uppercase tracking-tighter ${
+                    isActive ? "text-slate-900" : "text-slate-400"
+                  }`}>
+                    {step.label}
+                  </span>
+                </div>
+                {index < STEPS.length - 1 && (
+                  <div className="h-px w-full bg-slate-200/60 mx-4 hidden lg:block" />
+                )}
               </div>
-            </div>
+            );
+          })}
+        </nav>
+
+        {/* ================= Main Content Area ================= */}
+        <div className="grid grid-cols-1 gap-8">
+          {/* Context Summary Bar */}
+          {(situation || accent || mode) && (
+            <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {[
+                { label: 'Situation', val: situation?.title, color: 'bg-indigo-600', text: 'text-indigo-600' },
+                { label: 'Accent', val: accent, color: 'bg-teal-500', text: 'text-teal-600' },
+                { label: 'Mode', val: mode, color: 'bg-amber-500', text: 'text-amber-600' }
+              ].map((item, i) => item.val && (
+                <div key={i} className="flex items-center gap-4 px-6 py-4 bg-white/80 border border-white rounded-[2rem] shadow-sm">
+                  <div className={`w-1.5 h-10 rounded-full ${item.color}`} />
+                  <div>
+                    <p className="text-[9px] font-black uppercase tracking-[0.25em] text-slate-400 mb-0.5">{item.label}</p>
+                    <p className="font-extrabold text-slate-800 capitalize leading-none">{item.val}</p>
+                  </div>
+                </div>
+              ))}
+            </section>
           )}
 
-          {accent && (
-            <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200/50">
-              <div className="text-xs text-emerald-600 mb-1">Accent</div>
-              <div className="font-medium text-slate-800">
-                {accent}
-              </div>
-            </div>
-          )}
+          {/* Main Flow Container */}
+          <section className="rounded-xl bg-white border border-slate-100 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.04)] p-6 md:p-8 relative transition-all duration-700">
+            <div className="relative z-10 h-full">
+              {state === "IDLE" && (
+                <SituationSelector onSelect={(s) => { setSituation(s); setState("ACCENT_SELECTED"); }} />
+              )}
 
-          {mode && (
-            <div className="p-4 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-200/50">
-              <div className="text-xs text-amber-600 mb-1">Mode</div>
-              <div className="font-medium text-slate-800 capitalize">
-                {mode}
-              </div>
+              {state === "ACCENT_SELECTED" && (
+                <AccentSelector onSelect={(a) => { setAccent(a); setState("MODE_SELECTED"); }} onBack={reset} />
+              )}
+
+              {state === "MODE_SELECTED" && (
+                <ModeSelector onSelect={(m) => { setMode(m); setState(m === "view" ? "VIEWING" : "ACTOR_SELECTED"); }} onBack={() => setState("ACCENT_SELECTED")} />
+              )}
+
+              {state === "VIEWING" && fullSituation && (
+                <ConversationView situation={fullSituation} accent={accent} onBack={() => setState("MODE_SELECTED")} />
+              )}
+
+              {state === "ACTOR_SELECTED" && fullSituation && (
+                <ActorSelector actors={fullSituation.actors} onSelect={(actor) => { setSelectedActor(actor); setState("PRACTICING"); }} onBack={() => setState("MODE_SELECTED")} onBackToRecordings={() => router.push('/user/recordings')} />
+              )}
+
+              {state === "PRACTICING" && fullSituation && (
+                <PracticeView situation={fullSituation} accent={accent} selectedActor={selectedActor} onBack={() => setState("MODE_SELECTED")} onBackToRecordings={() => router.push('/user/recordings')} />
+              )}
             </div>
-          )}
+          </section>
         </div>
-      )}
-
-      {/* Main Flow Container */}
-      <div className="rounded-2xl p-6
-                      bg-white/70 backdrop-blur-lg
-                      border border-white/40
-                      shadow-xl">
-
-        {state === "IDLE" && (
-          <SituationSelector
-            onSelect={(s) => {
-              setSituation(s);
-              setState("ACCENT_SELECTED");
-            }}
-          />
-        )}
-
-        {state === "ACCENT_SELECTED" && (
-          <AccentSelector
-            onSelect={(a) => {
-              setAccent(a);
-              setState("MODE_SELECTED");
-            }}
-            onBack={reset}
-          />
-        )}
-
-        {state === "MODE_SELECTED" && (
-          <ModeSelector
-            onSelect={(m) => {
-              setMode(m);
-              setState(m === "view" ? "VIEWING" : "ACTOR_SELECTED");
-            }}
-            onBack={() => setState("ACCENT_SELECTED")}
-          />
-        )}
-
-        {state === "VIEWING" && fullSituation && (
-          <ConversationView
-            situation={fullSituation}
-            accent={accent}
-            onBack={() => setState("MODE_SELECTED")}
-          />
-        )}
-
-        {state === "ACTOR_SELECTED" && fullSituation && (
-          <ActorSelector
-            actors={fullSituation.actors}
-            onSelect={(actor) => {
-              setSelectedActor(actor);
-              setState("PRACTICING");
-            }}
-            onBack={() => setState("MODE_SELECTED")}
-            onBackToRecordings={()=>{
-              router.push('/user/recordings')
-            }}
-          />
-        )}
-
-        {state === "PRACTICING" && fullSituation && (
-          <PracticeView
-            situation={fullSituation}
-            accent={accent}
-            selectedActor={selectedActor}
-            onBack={() => setState("MODE_SELECTED")}
-            onBackToRecordings={()=>{
-              router.push('/user/recordings')
-            }}
-          />
-        )}
       </div>
     </main>
   );
